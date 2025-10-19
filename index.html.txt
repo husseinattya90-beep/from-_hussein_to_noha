@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Breaking News — Fun mode for Noha</title>
+<style>
+  :root{
+    --bg1:#f7efe6; /* warm beige */
+    --accent:#d8bfa8;
+    --text:#2b2b2b;
+    --muted:#6b6b6b;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+  body{
+    background: linear-gradient(180deg,var(--bg1), #fbf6ef);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text);
+  }
+
+  .card{
+    width:92vw; max-width:760px; border-radius:18px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding:28px; background:rgba(255,255,255,0.65); backdrop-filter: blur(6px);
+    position:relative; overflow:hidden;
+  }
+
+  .overlay{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
+    z-index:30; flex-direction:column; gap:18px;
+  }
+  .tap-btn{
+    background: linear-gradient(135deg,var(--accent), #f0d7c6);
+    border:none;padding:14px 26px;border-radius:999px;font-weight:600;
+    cursor:pointer; box-shadow: 0 6px 18px rgba(213,171,148,0.28); font-size:18px;
+  }
+  .title{font-size:20px;font-weight:700;margin-bottom:6px;}
+  .subtitle{color:var(--muted);font-size:14px;margin-bottom:12px;}
+  .line{font-size:20px;opacity:0; transform: translateY(8px); transition: all 420ms cubic-bezier(.2,.9,.25,1); margin:10px 0;}
+  .line.show{opacity:1; transform: translateY(0);}
+
+  .small{font-size:14px;color:var(--muted); margin-top:12px;}
+  .final{font-size:18px;margin-top:18px; font-weight:600; color:#2d2d2d;}
+  .signature{margin-top:12px;color:#9b6f60;font-weight:600;}
+
+  /* simple confetti pieces */
+  #confetti{ position:absolute; inset:0; pointer-events:none; z-index:25; }
+
+  /* YouTube iframe hidden */
+  #yt-player{ display:block; width:1px; height:1px; opacity:0; position:absolute; left:-9999px; top:-9999px; }
+</style>
+</head>
+<body>
+  <div class="card" role="main" aria-live="polite">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#f0d7c6,#f7e6d8);display:flex;align-items:center;justify-content:center;font-weight:700;color:#6b3f2b;">
+        💥
+      </div>
+      <div>
+        <div class="title">Breaking News:</div>
+        <div class="subtitle">The Great Argument Era Has Officially Ended!</div>
+      </div>
+    </div>
+
+    <div id="messages" style="margin-top:26px;">
+      <div class="line" id="l0">“All fights have been deleted.”</div>
+      <div class="line" id="l1">“Drama level: 0%”</div>
+      <div class="line" id="l2">“Sarcasm level: fully restored.”</div>
+      <div class="line" id="l3">“From now on: jokes, laughter, chaos (the good kind).”</div>
+      <div class="line" id="l4">“New update installed: ‘Fun mode ON’.”</div>
+      <div class="line" id="l5">Let’s just keep things light…</div>
+      <div class="line" id="l6">and maybe a little sweet too.</div>
+      <div class="line" id="l7">I told you million times before you are more than enough.</div>
+      <div class="line final" id="l8">So take it easy, nothing deserves to make you upset 💛</div>
+
+      <div class="signature">— Message from Hussein to Noha</div>
+    </div>
+
+    <div class="small">Tap the button to start the animation & music</div>
+
+    <canvas id="confetti"></canvas>
+
+    <div class="overlay" id="overlay">
+      <div style="text-align:center;">
+        <div style="font-size:22px;font-weight:700;">Tap to start 💫</div>
+        <div style="color:var(--muted);margin-top:8px;">Play: Love in Portofino (YouTube)</div>
+      </div>
+      <button class="tap-btn" id="startBtn">Start</button>
+    </div>
+
+    <!-- Hidden YouTube iframe (we use IFrame API to play on user click) -->
+    <div id="yt-player">
+      <div id="player"></div>
+    </div>
+  </div>
+
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  // === CONFIG ===
+  // Using an official YouTube upload for "Love in Portofino" (Andrea Bocelli / Universal)
+  // Video ID used below (official uploads available on YouTube).
+  // If you want a different upload, replace the videoId value.
+  const VIDEO_ID = 'S_Bsk8FCfrs'; // (Andrea Bocelli / Universal) — replace if needed
+
+  // === YT PLAYER SETUP ===
+  let player;
+  function onYouTubeIframeAPIReady(){
+    player = new YT.Player('player', {
+      height: '1', width: '1',
+      videoId: VIDEO_ID,
+      playerVars: {
+        autoplay: 0,
+        controls: 1,
+        modestbranding: 1,
+        rel: 0,
+        playsinline: 1
+      },
+      events:{
+        'onReady': onPlayerReady
+      }
+    });
+  }
+  function onPlayerReady(ev){
+    // nothing auto — we'll call playVideo() after user taps
+  }
+
+  // === SEQUENCE ANIMATION ===
+  const lines = [];
+  for(let i=0;i<9;i++) lines.push(document.getElementById('l'+i));
+  const overlay = document.getElementById('overlay');
+  const startBtn = document.getElementById('startBtn');
+
+  function showSequence(){
+    const delays = [0,700,1400,2200,3000,3900,4700,5500,6300];
+    for(let i=0;i<lines.length;i++){
+      setTimeout(()=> {
+        if(lines[i]) lines[i].classList.add('show');
+        // trigger confetti on the "New update installed" line (index 4)
+        if(i===4) launchConfetti(60);
+      }, delays[i]);
+    }
+  }
+
+  startBtn.addEventListener('click', () => {
+    // hide overlay
+    overlay.style.transition = 'opacity 350ms ease'; overlay.style.opacity = 0;
+    setTimeout(()=> overlay.style.display = 'none', 400);
+
+    // play youtube audio (user has interacted)
+    try{
+      if(player && player.playVideo) player.playVideo();
+    }catch(e){
+      console.warn('YT play failed, user may need to press play on the player.');
+    }
+    // begin text sequence
+    setTimeout(showSequence, 220);
+  });
+
+  // === SIMPLE CONFETTI ===
+  const confettiCanvas = document.getElementById('confetti');
+  const ctx = confettiCanvas.getContext && confettiCanvas.getContext('2d');
+  let confettiPieces = [];
+  function resizeCanvas(){
+    confettiCanvas.width = confettiCanvas.clientWidth || window.innerWidth;
+    confettiCanvas.height = confettiCanvas.clientHeight || window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function launchConfetti(n){
+    if(!ctx) return;
+    for(let i=0;i<n;i++){
+      confettiPieces.push({
+        x: Math.random()*confettiCanvas.width,
+        y: -20 - Math.random()*100,
+        r: 6 + Math.random()*8,
+        d: Math.random()*50+40,
+        vx: (Math.random()-0.5)*2,
+        vy: 1 + Math.random()*3,
+        color: ['#f7c6b6','#f2e1c9','#d9bfa8','#ffd7a8'][Math.floor(Math.random()*4)],
+        rot: Math.random()*360,
+        vr: (Math.random()-0.5)*10
+      });
+    }
+    if(!confettiLoopRunning) runConfettiLoop();
+  }
+
+  let confettiLoopRunning = false;
+  function runConfettiLoop(){
+    confettiLoopRunning = true;
+    function frame(){
+      ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+      for(let i=0;i<confettiPieces.length;i++){
+        const p = confettiPieces[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.rot * Math.PI/180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*1.6);
+        ctx.restore();
+
+        if(p.y > confettiCanvas.height + 50){
+          confettiPieces.splice(i,1); i--;
+        }
+      }
+      if(confettiPieces.length>0) requestAnimationFrame(frame);
+      else confettiLoopRunning = false;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // accessibility: allow pressing Enter on the start button
+  startBtn.addEventListener('keydown', e=>{
+    if(e.key==='Enter') startBtn.click();
+  });
+
+  // ensure canvas sizes right
+  setTimeout(resizeCanvas, 200);
+</script>
+</body>
+</html>
