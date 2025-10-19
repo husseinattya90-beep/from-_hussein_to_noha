@@ -26,6 +26,7 @@
       width: 80%;
       max-width: 600px;
       line-height: 1.6;
+      white-space: pre-wrap;
     }
 
     #story.active {
@@ -50,11 +51,6 @@
     .hidden {
       display: none;
     }
-
-    @keyframes fadeInUp {
-      from {opacity: 0; transform: translateY(30px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
   </style>
 </head>
 <body>
@@ -67,10 +63,14 @@
 
   <script>
     const scenes = [
-      "😅 Okay... so maybe we argued a *little* too much lately.<br><br>Let’s pretend that was just... <i>character development</i>.",
-      "😎 New mission unlocked: *No more drama mode!*<br><br>Just laughter, memes, and snacks from now on.",
-      "😂 System update: Noha’s smile = 100x better than any victory in an argument.<br><br>Let’s just agree I’m probably wrong anyway.",
-      "💬 “Uploading peace files to Noha & Hussein”<br><br>Almost done... patience level: 99% 🕊️<br><br><b>I told you million times before you are more than enough.<br>So take it easy, nothing deserves to make you upset.</b>"
+      "😅 Okay... so maybe we argued a *little* too much lately.\n\nLet’s pretend that was just... *character development*.",
+      "😎 New mission unlocked: *No more drama mode!*\n\nJust laughter, memes, and snacks from now on.",
+      "😂 System update: Noha’s smile = 100x better than any victory in an argument.\n\nLet’s just agree I’m probably wrong anyway.",
+      "💬 “Uploading peace files to Noha & Hussein”\n\nAlmost done... patience level: 99% 🕊️\n\nI told you million times before you are more than enough. So take it easy, nothing deserves to make you upset.",
+      "🌟 Scene 5: Together, we can laugh at anything.\n\nMemes, snacks, and cozy vibes forever!",
+      "💖 Scene 6: Even on tough days, a smile shared with you is my favorite victory.",
+      "🍿 Scene 7: Let’s make our little world full of tiny joys and inside jokes.",
+      "🎉 Scene 8: Ending the story for now... but the fun never really ends 😉"
     ];
 
     const startBtn = document.getElementById("startBtn");
@@ -86,16 +86,28 @@
       showScene();
     });
 
-    function showScene() {
+    function typeText(text, callback) {
+      storyDiv.innerHTML = "";
+      let i = 0;
       storyDiv.classList.remove("active");
-      setTimeout(() => {
-        storyDiv.innerHTML = scenes[index];
-        storyDiv.classList.add("active");
-      }, 300);
 
-      index++;
+      const typingInterval = setInterval(() => {
+        storyDiv.innerHTML += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(typingInterval);
+          storyDiv.classList.add("active");
+          if (callback) callback();
+        }
+      }, 40); // سرعة ظهور كل حرف (40ms)
+    }
+
+    function showScene() {
       if (index < scenes.length) {
-        setTimeout(showScene, 5000); // 5 seconds per scene
+        typeText(scenes[index], () => {
+          index++;
+          setTimeout(showScene, 8000); // 8 ثواني لكل مشهد
+        });
       }
     }
   </script>
