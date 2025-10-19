@@ -3,31 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Message from Hussein to Noha</title>
+  <title>Noha Reset Mode 😅</title>
 
   <style>
     body {
-      background: linear-gradient(180deg, #f6f1e9 0%, #e8dcc7 100%);
-      color: #3b2f2f;
+      background: linear-gradient(180deg, #f6f1e9 0%, #eadfc8 100%);
+      color: #3f2f2f;
       font-family: "Poppins", sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      text-align: center;
       overflow: hidden;
+      margin: 0;
     }
 
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 1rem;
-      color: #5a4b4b;
-      margin-bottom: 30px;
+    h1, h2, p {
+      margin: 10px;
+      animation: fadeIn 1.2s ease;
     }
 
     button {
@@ -39,62 +34,53 @@
       font-size: 18px;
       cursor: pointer;
       transition: all 0.3s ease;
+      margin-top: 20px;
     }
 
     button:hover {
-      background-color: #c3a688;
+      background-color: #c5a27e;
       transform: scale(1.05);
-    }
-
-    .fade-out {
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    .scene {
-      text-align: center;
-      max-width: 90%;
     }
 
     .hidden {
       display: none;
     }
 
-    .final {
-      font-weight: 600;
-      margin-top: 15px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 
 <body>
-  <!--   -->
-  <audio id="bg-music" src="https://pixeldrain.com/u/gQPNAmT3" preload="auto"></audio>
+  <!-- موسيقى الخلفية -->
+  <audio id="bg-music" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
 
-  <!--   -->
-  <div id="scene1" class="scene">
-    <h2>Breaking News </h2>
-    <p>The Great Argument Era has officially ended!</p>
-    <button id="start-btn" onclick="startScenes()">Tap to start </button>
+  <!-- المشهد الأول -->
+  <div id="scene1">
+    <h1>🧠 System Restart: Noha Mode Loading...</h1>
+    <p>Wait a sec, removing all argument files 🗑️</p>
+    <button onclick="startSequence()">Tap to start 🎵</button>
   </div>
 
-  <!--   -->
-  <div id="scene2" class="scene hidden">
-    <h2>Scene 2</h2>
-    <p>Starting today: only jokes, laughs and zero drama </p>
+  <!-- المشهد الثاني -->
+  <div id="scene2" class="hidden">
+    <h2>Cleaning memory of the last fight...</h2>
+    <p>Deleted: “Who started it first?” ✅</p>
   </div>
 
-  <!--   -->
-  <div id="scene3" class="scene hidden">
-    <h2>Scene 3</h2>
-    <p>By order of the Ministry of Peaceful Couples: no more silly fights </p>
+  <!-- المشهد الثالث -->
+  <div id="scene3" class="hidden">
+    <h2>Installing: Fun, Jokes & Laughter Pack 😂</h2>
+    <p>Please don’t turn off your happiness during this update!</p>
   </div>
 
-  <!--   () -->
-  <div id="scene4" class="scene hidden">
-    <h2>Final Message </h2>
-    <p>I told you a million times before � you are more than enough.<br>
-    So take it easy, nothing deserves to make you upset </p>
+  <!-- المشهد الرابع -->
+  <div id="scene4" class="hidden">
+    <h2>All done 🩵</h2>
+    <p>I told you million times before — you are more than enough.<br>
+    So take it easy, nothing deserves to make you upset 🤍</p>
   </div>
 
   <script>
@@ -104,27 +90,25 @@
       document.getElementById("scene3"),
       document.getElementById("scene4")
     ];
+
     const music = document.getElementById("bg-music");
 
-    function startScenes() {
+    function startSequence() {
       music.play();
       let current = 0;
 
       function nextScene() {
         if (current < scenes.length - 1) {
-          scenes[current].classList.add("fade-out");
-          setTimeout(() => {
-            scenes[current].classList.add("hidden");
-            current++;
-            scenes[current].classList.remove("hidden");
-          }, 1000);
+          scenes[current].classList.add("hidden");
+          current++;
+          scenes[current].classList.remove("hidden");
         }
       }
 
-      //   
-      nextScene();
-      //      4 
-      setInterval(nextScene, 4000);
+      nextScene(); // move to scene2
+      setTimeout(nextScene, 3000);
+      setTimeout(nextScene, 6000);
+      setTimeout(nextScene, 9000);
     }
   </script>
 </body>
