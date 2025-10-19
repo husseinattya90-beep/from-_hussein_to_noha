@@ -36,11 +36,12 @@
     button {
       background: #e7d9c3;
       border: none;
-      padding: 12px 30px;
+      padding: 14px 32px;
       border-radius: 25px;
       font-size: 1.1rem;
       cursor: pointer;
       transition: background 0.3s;
+      color: #4a3f35;
     }
 
     button:hover {
@@ -50,16 +51,10 @@
     .hidden {
       display: none;
     }
-
-    @keyframes fadeInUp {
-      from {opacity: 0; transform: translateY(30px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
   </style>
 </head>
 <body>
 
-  <!-- 🎵 موسيقى مرحة -->
   <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/14/audio_9a4e6e5b72.mp3?filename=happy-funny-kids-112199.mp3"></audio>
 
   <div id="container">
@@ -72,13 +67,12 @@
       "😅 Okay... so maybe we argued a *little* too much lately.<br><br>Let’s pretend that was just... <i>character development</i>.",
       "😎 New mission unlocked: *No more drama mode!*<br><br>Just laughter, memes, and snacks from now on.",
       "😂 System update: Noha’s smile = 100x better than any victory in an argument.<br><br>Let’s just agree I’m probably wrong anyway.",
-      "💬 “Uploading peace files to Noha & Hussein”<br><br>Almost done... patience level: 99% 🕊️<br><br><b>I told you million times before you are more than enough.<br>So take it easy, nothing deserves to make you upset.</b>"
+      "💬 Uploading peace files to Noha & Hussein<br><br>Almost done... patience level: 99% 🕊️<br><br><b>I told you million times before you are more than enough.<br>So take it easy, nothing deserves to make you upset.</b>"
     ];
 
     const startBtn = document.getElementById("startBtn");
     const storyDiv = document.getElementById("story");
     const music = document.getElementById("bgMusic");
-
     let index = 0;
 
     startBtn.addEventListener("click", async () => {
@@ -87,9 +81,9 @@
 
       try {
         await music.play();
-        music.volume = 0.4; // مستوى الصوت
-      } catch (e) {
-        alert("Click OK to enable sound 🎵");
+        music.volume = 0.5;
+      } catch {
+        alert("Please tap OK to start the sound 🎵");
         await music.play();
       }
 
@@ -97,6 +91,8 @@
     });
 
     function showScene() {
+      if (index >= scenes.length) return;
+
       storyDiv.classList.remove("active");
       setTimeout(() => {
         storyDiv.innerHTML = scenes[index];
@@ -105,7 +101,7 @@
 
       index++;
       if (index < scenes.length) {
-        setTimeout(showScene, 5000); // 5 seconds per scene
+        setTimeout(showScene, 5000);
       }
     }
   </script>
