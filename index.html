@@ -79,10 +79,18 @@
 
     let index = 0;
 
-    startBtn.addEventListener("click", () => {
+    startBtn.addEventListener("click", async () => {
       startBtn.classList.add("hidden");
       storyDiv.classList.remove("hidden");
-      music.play().catch(() => console.log("Autoplay blocked"));
+
+      try {
+        await music.play();
+        music.volume = 0.4; // مستوى الصوت
+      } catch (e) {
+        alert("Click OK to enable sound 🎵");
+        await music.play();
+      }
+
       showScene();
     });
 
