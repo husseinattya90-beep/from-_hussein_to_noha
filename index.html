@@ -3,112 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noha Reset Mode 😅</title>
-
+  <title>Noha & Hussein</title>
   <style>
     body {
-      background: linear-gradient(180deg, #f6f1e9 0%, #eadfc8 100%);
-      color: #3f2f2f;
-      font-family: "Poppins", sans-serif;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8f3eb, #f2e8d5);
+      color: #4a3f35;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      text-align: center;
       overflow: hidden;
-      margin: 0;
     }
 
-    h1, h2, p {
-      margin: 10px;
-      animation: fadeIn 1.2s ease;
+    #story {
+      text-align: center;
+      font-size: 1.4rem;
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+      transform: translateY(20px);
+      width: 80%;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    #story.active {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     button {
-      background-color: #d4b89b;
-      color: white;
+      background: #e7d9c3;
       border: none;
-      border-radius: 12px;
-      padding: 12px 25px;
-      font-size: 18px;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 1.1rem;
       cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 20px;
+      transition: background 0.3s;
     }
 
     button:hover {
-      background-color: #c5a27e;
-      transform: scale(1.05);
+      background: #d9c8ae;
     }
 
     .hidden {
       display: none;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
-
 <body>
-  <!-- موسيقى الخلفية -->
-  <audio id="bg-music" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+  <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/14/audio_9a4e6e5b72.mp3?filename=happy-funny-kids-112199.mp3"></audio>
 
-  <!-- المشهد الأول -->
-  <div id="scene1">
-    <h1>🧠 System Restart: Noha Mode Loading...</h1>
-    <p>Wait a sec, removing all argument files 🗑️</p>
-    <button onclick="startSequence()">Tap to start 🎵</button>
-  </div>
-
-  <!-- المشهد الثاني -->
-  <div id="scene2" class="hidden">
-    <h2>Cleaning memory of the last fight...</h2>
-    <p>Deleted: “Who started it first?” ✅</p>
-  </div>
-
-  <!-- المشهد الثالث -->
-  <div id="scene3" class="hidden">
-    <h2>Installing: Fun, Jokes & Laughter Pack 😂</h2>
-    <p>Please don’t turn off your happiness during this update!</p>
-  </div>
-
-  <!-- المشهد الرابع -->
-  <div id="scene4" class="hidden">
-    <h2>All done 🩵</h2>
-    <p>I told you million times before — you are more than enough.<br>
-    So take it easy, nothing deserves to make you upset 🤍</p>
+  <div id="container">
+    <button id="startBtn">Tap to start</button>
+    <div id="story" class="hidden"></div>
   </div>
 
   <script>
     const scenes = [
-      document.getElementById("scene1"),
-      document.getElementById("scene2"),
-      document.getElementById("scene3"),
-      document.getElementById("scene4")
+      "😅 Okay... so maybe we argued a *little* too much lately.<br><br>Let’s pretend that was just... <i>character development</i>.",
+      "😎 New mission unlocked: *No more drama mode!*<br><br>Just laughter, memes, and snacks from now on.",
+      "😂 System update: Noha’s smile = 100x better than any victory in an argument.<br><br>Let’s just agree I’m probably wrong anyway.",
+      "💬 “Uploading peace files to Noha & Hussein”<br><br>Almost done... patience level: 99% 🕊️<br><br><b>I told you million times before you are more than enough.<br>So take it easy, nothing deserves to make you upset.</b>"
     ];
 
-    const music = document.getElementById("bg-music");
+    const startBtn = document.getElementById("startBtn");
+    const storyDiv = document.getElementById("story");
+    const music = document.getElementById("bgMusic");
 
-    function startSequence() {
-      music.play();
-      let current = 0;
+    let index = 0;
 
-      function nextScene() {
-        if (current < scenes.length - 1) {
-          scenes[current].classList.add("hidden");
-          current++;
-          scenes[current].classList.remove("hidden");
-        }
+    startBtn.addEventListener("click", () => {
+      startBtn.classList.add("hidden");
+      storyDiv.classList.remove("hidden");
+      music.play().catch(() => console.log("Autoplay blocked"));
+      showScene();
+    });
+
+    function showScene() {
+      storyDiv.classList.remove("active");
+      setTimeout(() => {
+        storyDiv.innerHTML = scenes[index];
+        storyDiv.classList.add("active");
+      }, 300);
+
+      index++;
+      if (index < scenes.length) {
+        setTimeout(showScene, 5000); // 5 seconds per scene
       }
-
-      nextScene(); // move to scene2
-      setTimeout(nextScene, 3000);
-      setTimeout(nextScene, 6000);
-      setTimeout(nextScene, 9000);
     }
   </script>
 </body>
