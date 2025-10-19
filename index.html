@@ -1,115 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noha & Hussein</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f8f3eb, #f2e8d5);
-      color: #4a3f35;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    #story {
-      text-align: center;
-      font-size: 1.4rem;
-      opacity: 0;
-      transition: opacity 1s ease, transform 1s ease;
-      transform: translateY(20px);
-      width: 80%;
-      max-width: 600px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    #story.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    button {
-      background: #e7d9c3;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 25px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #d9c8ae;
-    }
-
-    .hidden {
-      display: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noha & Hussein</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg,#f8f3eb,#f2e8d5);
+  color: #4a3f35;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+#story {
+  text-align: center;
+  font-size: 1.4rem;
+  max-width: 600px;
+  line-height: 1.6;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+#story.active { opacity: 1; }
+button {
+  background:#e7d9c3; border:none; padding:12px 30px; border-radius:25px;
+  font-size:1.1rem; cursor:pointer;
+}
+button:hover { background:#d9c8ae; }
+.hidden { display:none; }
+</style>
 </head>
 <body>
-  <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/14/audio_9a4e6e5b72.mp3?filename=happy-funny-kids-112199.mp3"></audio>
+<button id="startBtn">Tap to start</button>
+<div id="story" class="hidden"></div>
 
-  <div id="container">
-    <button id="startBtn">Tap to start</button>
-    <div id="story" class="hidden"></div>
-  </div>
+<script>
+const scenes=[
+"😅 Okay... so maybe we argued a little too much lately.\nLet’s pretend that was just... character development.",
+"😎 New mission unlocked: No more drama mode!\nJust laughter, memes, and snacks from now on.",
+"😂 System update: Noha’s smile = 100x better than any victory in an argument.\nLet’s just agree I’m probably wrong anyway.",
+"💬 Uploading peace files to Noha & Hussein\nAlmost done... patience level: 99% 🕊️\nI told you million times before you are more than enough. So take it easy, nothing deserves to make you upset.",
+"🎉 Ending the story for now... but the fun never really ends 😉"
+];
 
-  <script>
-    const scenes = [
-      "😅 Okay... so maybe we argued a *little* too much lately.\n\nLet’s pretend that was just... *character development*.",
-      "😎 New mission unlocked: *No more drama mode!*\n\nJust laughter, memes, and snacks from now on.",
-      "😂 System update: Noha’s smile = 100x better than any victory in an argument.\n\nLet’s just agree I’m probably wrong anyway.",
-      "💬 “Uploading peace files to Noha & Hussein”\n\nAlmost done... patience level: 99% 🕊️\n\nI told you million times before you are more than enough. So take it easy, nothing deserves to make you upset.",
-      "🌟 Scene 5: Together, we can laugh at anything.\n\nMemes, snacks, and cozy vibes forever!",
-      "💖 Scene 6: Even on tough days, a smile shared with you is my favorite victory.",
-      "🍿 Scene 7: Let’s make our little world full of tiny joys and inside jokes.",
-      "🎉 Scene 8: Ending the story for now... but the fun never really ends 😉"
-    ];
+const btn=document.getElementById("startBtn");
+const story=document.getElementById("story");
+let index=0;
 
-    const startBtn = document.getElementById("startBtn");
-    const storyDiv = document.getElementById("story");
-    const music = document.getElementById("bgMusic");
+btn.addEventListener("click",()=>{
+btn.classList.add("hidden");
+story.classList.remove("hidden");
+story.classList.add("active");
+showScene();
+});
 
-    let index = 0;
+function showScene(){
+if(index>=scenes.length) return;
+typeText(scenes[index],()=>{index++; setTimeout(showScene,3000)});
+}
 
-    startBtn.addEventListener("click", () => {
-      startBtn.classList.add("hidden");
-      storyDiv.classList.remove("hidden");
-      music.play().catch(() => console.log("Autoplay blocked"));
-      showScene();
-    });
-
-    function typeText(text, callback) {
-      storyDiv.innerHTML = "";
-      let i = 0;
-      storyDiv.classList.remove("active");
-
-      const typingInterval = setInterval(() => {
-        storyDiv.innerHTML += text[i];
-        i++;
-        if (i >= text.length) {
-          clearInterval(typingInterval);
-          storyDiv.classList.add("active");
-          if (callback) callback();
-        }
-      }, 40); // سرعة ظهور كل حرف (40ms)
-    }
-
-    function showScene() {
-      if (index < scenes.length) {
-        typeText(scenes[index], () => {
-          index++;
-          setTimeout(showScene, 8000); // 8 ثواني لكل مشهد
-        });
-      }
-    }
-  </script>
+function typeText(text,callback){
+story.innerHTML="";
+let chars=Array.from(text);
+let i=0;
+function nextChar(){
+if(i<chars.length){
+  story.innerHTML+=chars[i]==="\n"?"<br>":chars[i];
+  i++;
+  setTimeout(nextChar,40);
+}else{ if(callback) callback(); }
+}
+nextChar();
+}
+</script>
 </body>
 </html>
