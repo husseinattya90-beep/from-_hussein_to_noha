@@ -28,7 +28,7 @@
     100% {background: #ffdde1;}
   }
 
-  /* 🏞️ صورة الخلفية المتحركة (سنحتفظ بـ CSS الخاص بها، لكن الكود سيجعلها مخفية) */
+  /* 🏞️ صورة الخلفية المتحركة (ستبقى مخفية لأن روابط الصور محذوفة) */
   .background-image {
     position: absolute;
     top: 0;
@@ -96,7 +96,7 @@
 <div class="text" data-full-text="She doesn’t wait for anyone to tell her to start."></div>
 <div class="text" data-full-text="She starts because… she decided to."></div>
 <div class="text" data-full-text="People say: ‘That’s impossible.’"></div>
-<div class="text" data-full-text="She smiles and goes: Ma b3rf y3ny"></div> 
+<div class="text" data-full-text="She smiles and goes: بالتأكيد يمكنني ذلك."></div> 
 <div class="text" data-full-text="And a few days later…"></div>
 <div class="text" data-full-text="She’s already done it."></div>
 <div class="text" data-full-text="When people ask how—she just says: ‘I was bored 😴.’"></div>
@@ -123,7 +123,7 @@
 <div class="text" data-full-text="Congrats."></div>
 <div class="text" data-full-text="You’re the main character 🌟"></div>
 
-<div class="text final-line-1" data-full-text="Yeah… even the plot twist needed you 💖👑" style="font-size:2.2rem; font-weight:bold; color:#d63030;"></div>
+<div class="text final-line-1" data-full-text="Yeah… even the plot twist needed you 👑" style="font-size:2.2rem; font-weight:bold; color:#d63030;"></div>
 <div class="text final-line-2" data-full-text="✨ And the story’s better because you’re in it. ✨" style="font-size:2.2rem; font-weight:bold; color:#2d3436; opacity: 0;"></div>
 
 
@@ -179,11 +179,11 @@ async function showNext() {
   if (current < texts.length) {
     const currentTextElement = texts[current];
     const fullText = currentTextElement.getAttribute('data-full-text');
-    // لن يجد الكود خاصية data-meme-src لأنها حذفت سابقاً
+    // هذه الخاصية الآن غير موجودة (تم حذفها)
     const memeSrc = currentTextElement.getAttribute('data-meme-src'); 
 
-    // 2. معالجة صورة الخلفية (ستظل مخفية)
-    if (memeSrc) {
+    // 2. معالجة صورة الخلفية
+    if (memeSrc) { // لن يتم تنفيذ هذا الشرط أبدًا
         memeBg.style.opacity = '0'; 
         const newMeme = new Image();
         
@@ -199,6 +199,7 @@ async function showNext() {
         };
         newMeme.src = memeSrc;
     } else {
+       // سيتم تنفيذ هذا الجزء دائمًا
        memeBg.style.opacity = '0';
     }
 
