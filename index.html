@@ -12,22 +12,23 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#0b1622;
+background:black;
 font-family:"Courier New", monospace;
 overflow:hidden;
+color:white;
 }
 
 /* الخلفية */
 
 .background{
-position:absolute;
+position:fixed;
 width:100%;
 height:100%;
 background-image:url("46024a7c5f55139bf3c04a695fd684c0.jpg");
 background-size:cover;
 background-position:center;
-opacity:0.35;
 animation:zoom 40s infinite alternate;
+z-index:-2;
 }
 
 @keyframes zoom{
@@ -35,34 +36,48 @@ from{transform:scale(1);}
 to{transform:scale(1.1);}
 }
 
-/* الورقة */
+/* النجوم */
 
-.paper{
-position:relative;
-width:750px;
-max-width:90%;
-background:#fdfdfd;
-padding:60px;
-box-shadow:0 20px 60px rgba(0,0,0,0.6);
-border-radius:6px;
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+opacity:0.4;
+animation:moveStars 120s linear infinite;
+z-index:-1;
+}
+
+@keyframes moveStars{
+from{background-position:0 0;}
+to{background-position:1000px 1000px;}
 }
 
 /* النص */
 
+.textBox{
+max-width:900px;
+padding:40px;
+text-align:center;
+}
+
 #text{
-font-size:28px;
+font-size:48px;
 line-height:1.8;
 white-space:pre-wrap;
-color:#111;
+text-shadow:
+0 0 10px rgba(0,0,0,0.9),
+0 0 25px rgba(0,0,0,0.9);
 }
 
 /* المؤشر */
 
 .cursor{
 display:inline-block;
-width:3px;
-background:#111;
-margin-left:4px;
+width:4px;
+height:45px;
+background:white;
+margin-left:6px;
 animation:blink 1s infinite;
 }
 
@@ -72,17 +87,18 @@ animation:blink 1s infinite;
 100%{opacity:1}
 }
 
-/* زر البداية */
+/* اهتزاز خفيف */
 
-.startBtn{
-position:absolute;
-z-index:5;
-padding:15px 35px;
-font-size:22px;
-border:none;
-border-radius:8px;
-background:#ffffff;
-cursor:pointer;
+@keyframes shake{
+0%{transform:translate(0px,0px)}
+25%{transform:translate(1px,-1px)}
+50%{transform:translate(-1px,1px)}
+75%{transform:translate(1px,1px)}
+100%{transform:translate(0px,0px)}
+}
+
+.typing{
+animation:shake 0.08s;
 }
 
 </style>
@@ -91,53 +107,49 @@ cursor:pointer;
 <body>
 
 <div class="background"></div>
+<div class="stars"></div>
 
-<button class="startBtn" onclick="start()">Start</button>
-
-<div class="paper">
-<span id="text"></span><span class="cursor">&nbsp;</span>
+<div class="textBox">
+<span id="text"></span><span class="cursor"></span>
 </div>
 
 <script>
 
 const message = `I kept thinking about our conversation yesterday.
 
-Somewhere in the middle of our joking, I think I took your words in a different direction. I'm not even sure why. Maybe for a moment I felt like I had to explain my way of thinking, or prove something that I didn’t actually need to prove.
+Somewhere in the middle of our joking, I think I took your words in a different direction.
 
-And maybe, without noticing, I put a small wall there for a second.
+Maybe for a moment I felt like I had to explain my way of thinking.
 
 But the truth is… when I look at the bigger picture of us lately, it doesn’t feel like walls at all.
 
-If anything, it feels like the opposite.
+It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything.
 
-It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything. At least from my side, I feel very safe with you.
-
-Somewhere along the way, you became a place that feels a little like home to me.
-
-And honestly, that kind of calm… that kind of peace… is a little mind-blowing.
-
-I think this is the answer I found.
-
-And maybe that’s exactly why I act the way I do sometimes.`
+Somewhere along the way, you became a place that feels a little like home to me.`
 
 let i = 0
-let speed = 90
+let speed = 110
 
-const sound = new Audio("typewriter.mp3")
-
-function start(){
-document.querySelector(".startBtn").style.display="none"
-typeWriter()
-}
+const typingSound = new Audio("typewriter.mp3")
+const dingSound = new Audio("ding.mp3")
 
 function typeWriter(){
 
 if(i < message.length){
 
-document.getElementById("text").innerHTML += message.charAt(i)
+let textElement = document.getElementById("text")
 
-sound.currentTime = 0
-sound.play()
+textElement.innerHTML += message.charAt(i)
+
+textElement.classList.add("typing")
+setTimeout(()=>textElement.classList.remove("typing"),80)
+
+typingSound.currentTime = 0
+typingSound.play().catch(()=>{})
+
+if(message.charAt(i) === "\n"){
+dingSound.play().catch(()=>{})
+}
 
 i++
 
@@ -146,6 +158,10 @@ setTimeout(typeWriter, speed)
 }
 
 }
+
+document.body.addEventListener("click",()=>{
+typeWriter()
+},{once:true})
 
 </script>
 
