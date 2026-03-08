@@ -23,12 +23,11 @@ color:white;
 position:fixed;
 width:100%;
 height:100%;
-background-image:url("love.jpg");
+background-image:url("46024a7c5f55139bf3c04a695fd684c0.jpg");
 background-size:cover;
 background-position:center;
 animation:zoom 40s infinite alternate;
 z-index:-2;
-filter:brightness(0.35);
 }
 
 @keyframes zoom{
@@ -64,7 +63,7 @@ text-align:center;
 
 /* النص */
 #text{
-font-size:44px;
+font-size:46px;
 line-height:1.8;
 white-space:pre-wrap;
 text-shadow:
@@ -101,22 +100,6 @@ animation:blink 1s infinite;
 animation:shake 0.08s;
 }
 
-/* صورة النهاية */
-.finalImage{
-margin-top:40px;
-width:360px;
-border-radius:20px;
-opacity:0;
-transform:scale(0.8);
-transition:2s;
-box-shadow:0 0 40px rgba(255,255,255,0.4);
-}
-
-.showImage{
-opacity:1;
-transform:scale(1);
-}
-
 </style>
 </head>
 
@@ -127,51 +110,33 @@ transform:scale(1);
 
 <div class="textBox" id="box">
 <span id="text"></span><span class="cursor"></span>
-<br>
-<img src="love.jpg" id="loveImage" class="finalImage">
 </div>
 
 <script>
 
 const message = `I kept thinking about our conversation yesterday.
 
-Somewhere in the middle of our joking, I think I took your words in a different direction. I'm not even sure why.
-
-Maybe for a moment I felt like I had to explain my way of thinking, or prove something that I didn’t actually need to prove.
+Somewhere in the middle of our joking, I think I took your words in a different direction. I'm not even sure why. Maybe for a moment I felt like I had to explain my way of thinking, or prove something that I didn’t actually need to prove.
 
 And maybe, without noticing, I put a small wall there for a second.
 
-But the truth is…
-
-When I look at the bigger picture of us lately, it doesn’t feel like walls at all.
+But the truth is… when I look at the bigger picture of us lately, it doesn’t feel like walls at all.
 
 If anything, it feels like the opposite.
 
-It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything.
+It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything. At least from my side, I feel very safe with you.
 
-At least from my side, I feel very safe with you.
+Somewhere along the way, you became a place that feels a little like home to me. Not because I always have a problem to solve, but because I know there’s someone I can talk to, someone I can go to without thinking that they’ll add more pressure to my mind.
 
-Somewhere along the way, you became a place that feels a little like home to me.
+And honestly, that kind of calm… that kind of peace… is a little mind-blowing.
 
-Not because I always have a problem to solve…
+By the way, if you remember the "equation" I was talking about yesterday…
 
-But because I know there’s someone I can talk to.
+I think this is the answer I found.
 
-Someone I can go to without thinking that they’ll add more pressure to my mind.
+And maybe that’s exactly why I act the way I do sometimes.
 
-And honestly…
-
-That kind of calm.
-
-That kind of peace.
-
-Is a little mind-blowing.
-
-Maybe that’s exactly why I act the way I do sometimes.
-
-I know I can be intense sometimes…
-
-but you still stay.`;
+I know I can be intense sometimes… but you still stay 🐺`;
 
 let i = 0
 let speed = 110
@@ -187,27 +152,26 @@ let box = document.getElementById("box")
 
 textElement.innerHTML += message.charAt(i)
 
+/* اهتزاز */
 textElement.classList.add("typing")
 setTimeout(()=>textElement.classList.remove("typing"),80)
 
+/* صوت */
 typingSound.currentTime = 0
 typingSound.play().catch(()=>{})
 
 i++
 
+/* scroll داخل الصندوق */
 box.scrollTop = box.scrollHeight
 
 setTimeout(typeWriter, speed)
 
-}else{
-
-document.getElementById("loveImage").classList.add("showImage")
-
 }
 
 }
 
-/* يبدأ عند الضغط */
+/* يبدأ عند لمسة الشاشة */
 document.body.addEventListener("click",()=>{
 typeWriter()
 },{once:true})
