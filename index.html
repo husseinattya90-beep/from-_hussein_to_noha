@@ -8,13 +8,13 @@
 
 body{
 margin:0;
-height:100vh;
+min-height:100vh;
 display:flex;
 justify-content:center;
-align-items:center;
+align-items:flex-start;
 background:black;
 font-family:"Courier New", monospace;
-overflow:hidden;
+overflow-y:auto;
 color:white;
 }
 
@@ -53,13 +53,15 @@ from{background-position:0 0;}
 to{background-position:1000px 1000px;}
 }
 
-/* النص */
+/* صندوق النص */
 
 .textBox{
 max-width:900px;
-padding:40px;
+padding:80px 40px;
 text-align:center;
 }
+
+/* النص */
 
 #text{
 font-size:48px;
@@ -87,14 +89,14 @@ animation:blink 1s infinite;
 100%{opacity:1}
 }
 
-/* اهتزاز خفيف */
+/* اهتزاز الكتابة */
 
 @keyframes shake{
-0%{transform:translate(0px,0px)}
+0%{transform:translate(0,0)}
 25%{transform:translate(1px,-1px)}
 50%{transform:translate(-1px,1px)}
 75%{transform:translate(1px,1px)}
-100%{transform:translate(0px,0px)}
+100%{transform:translate(0,0)}
 }
 
 .typing{
@@ -131,7 +133,6 @@ let i = 0
 let speed = 110
 
 const typingSound = new Audio("typewriter.mp3")
-const dingSound = new Audio("ding.mp3")
 
 function typeWriter(){
 
@@ -141,23 +142,29 @@ let textElement = document.getElementById("text")
 
 textElement.innerHTML += message.charAt(i)
 
+/* اهتزاز */
 textElement.classList.add("typing")
 setTimeout(()=>textElement.classList.remove("typing"),80)
 
+/* صوت */
 typingSound.currentTime = 0
 typingSound.play().catch(()=>{})
 
-if(message.charAt(i) === "\n"){
-dingSound.play().catch(()=>{})
-}
-
 i++
+
+/* scroll تلقائي */
+window.scrollTo({
+top: document.body.scrollHeight,
+behavior: "smooth"
+})
 
 setTimeout(typeWriter, speed)
 
 }
 
 }
+
+/* يبدأ عند لمس الشاشة */
 
 document.body.addEventListener("click",()=>{
 typeWriter()
