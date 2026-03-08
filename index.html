@@ -1,8 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Noha</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0b1622;
+font-family:"Courier New", monospace;
+overflow:hidden;
+}
+
+/* الخلفية */
+
+.background{
+position:absolute;
+width:100%;
+height:100%;
+background-image:url("46024a7c5f55139bf3c04a695fd684c0.jpg");
+background-size:cover;
+background-position:center;
+opacity:0.35;
+animation:zoom 40s infinite alternate;
+}
+
+@keyframes zoom{
+from{transform:scale(1);}
+to{transform:scale(1.1);}
+}
+
+/* الورقة */
+
+.paper{
+position:relative;
+width:750px;
+max-width:90%;
+background:#fdfdfd;
+padding:60px;
+box-shadow:0 20px 60px rgba(0,0,0,0.6);
+border-radius:6px;
+}
+
+/* النص */
+
+#text{
+font-size:28px;
+line-height:1.8;
+white-space:pre-wrap;
+color:#111;
+}
+
+/* المؤشر */
+
+.cursor{
+display:inline-block;
+width:3px;
+background:#111;
+margin-left:4px;
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+0%{opacity:1}
+50%{opacity:0}
+100%{opacity:1}
+}
+
+/* زر البداية */
+
+.startBtn{
+position:absolute;
+z-index:5;
+padding:15px 35px;
+font-size:22px;
+border:none;
+border-radius:8px;
+background:#ffffff;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<button class="startBtn" onclick="start()">Start</button>
+
+<div class="paper">
+<span id="text"></span><span class="cursor">&nbsp;</span>
+</div>
+
 <script>
 
 const message = `I kept thinking about our conversation yesterday.
 
-Somewhere in the middle of our joking, I think I took your words in a different direction. I'm not even sure why. Maybe for a moment I felt like I had to explain my way of thinking.
+Somewhere in the middle of our joking, I think I took your words in a different direction. I'm not even sure why. Maybe for a moment I felt like I had to explain my way of thinking, or prove something that I didn’t actually need to prove.
 
 And maybe, without noticing, I put a small wall there for a second.
 
@@ -10,7 +110,7 @@ But the truth is… when I look at the bigger picture of us lately, it doesn’t
 
 If anything, it feels like the opposite.
 
-It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything.
+It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything. At least from my side, I feel very safe with you.
 
 Somewhere along the way, you became a place that feels a little like home to me.
 
@@ -24,6 +124,11 @@ let i = 0
 let speed = 90
 
 const sound = new Audio("typewriter.mp3")
+
+function start(){
+document.querySelector(".startBtn").style.display="none"
+typeWriter()
+}
 
 function typeWriter(){
 
@@ -42,6 +147,7 @@ setTimeout(typeWriter, speed)
 
 }
 
-typeWriter()
-
 </script>
+
+</body>
+</html>
