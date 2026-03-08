@@ -8,27 +8,27 @@
 
 body{
 margin:0;
-min-height:100vh;
+height:100vh;
 display:flex;
 justify-content:center;
-align-items:flex-start;
+align-items:center;
 background:black;
 font-family:"Courier New", monospace;
-overflow-y:auto;
+overflow:hidden;
 color:white;
 }
 
 /* الخلفية */
-
 .background{
 position:fixed;
 width:100%;
 height:100%;
-background-image:url("46024a7c5f55139bf3c04a695fd684c0.jpg");
+background-image:url("love.jpg");
 background-size:cover;
 background-position:center;
 animation:zoom 40s infinite alternate;
 z-index:-2;
+filter:brightness(0.35);
 }
 
 @keyframes zoom{
@@ -37,7 +37,6 @@ to{transform:scale(1.1);}
 }
 
 /* النجوم */
-
 .stars{
 position:fixed;
 width:100%;
@@ -54,17 +53,18 @@ to{background-position:1000px 1000px;}
 }
 
 /* صندوق النص */
-
 .textBox{
 max-width:900px;
-padding:80px 40px;
+width:90%;
+height:70vh;
+padding:40px;
+overflow-y:auto;
 text-align:center;
 }
 
 /* النص */
-
 #text{
-font-size:48px;
+font-size:44px;
 line-height:1.8;
 white-space:pre-wrap;
 text-shadow:
@@ -73,7 +73,6 @@ text-shadow:
 }
 
 /* المؤشر */
-
 .cursor{
 display:inline-block;
 width:4px;
@@ -90,7 +89,6 @@ animation:blink 1s infinite;
 }
 
 /* اهتزاز الكتابة */
-
 @keyframes shake{
 0%{transform:translate(0,0)}
 25%{transform:translate(1px,-1px)}
@@ -103,6 +101,22 @@ animation:blink 1s infinite;
 animation:shake 0.08s;
 }
 
+/* صورة النهاية */
+.finalImage{
+margin-top:40px;
+width:360px;
+border-radius:20px;
+opacity:0;
+transform:scale(0.8);
+transition:2s;
+box-shadow:0 0 40px rgba(255,255,255,0.4);
+}
+
+.showImage{
+opacity:1;
+transform:scale(1);
+}
+
 </style>
 </head>
 
@@ -111,23 +125,53 @@ animation:shake 0.08s;
 <div class="background"></div>
 <div class="stars"></div>
 
-<div class="textBox">
+<div class="textBox" id="box">
 <span id="text"></span><span class="cursor"></span>
+<br>
+<img src="love.jpg" id="loveImage" class="finalImage">
 </div>
 
 <script>
 
 const message = `I kept thinking about our conversation yesterday.
 
-Somewhere in the middle of our joking, I think I took your words in a different direction.
+Somewhere in the middle of our joking, I think I took your words in a different direction. I'm not even sure why.
 
-Maybe for a moment I felt like I had to explain my way of thinking.
+Maybe for a moment I felt like I had to explain my way of thinking, or prove something that I didn’t actually need to prove.
 
-But the truth is… when I look at the bigger picture of us lately, it doesn’t feel like walls at all.
+And maybe, without noticing, I put a small wall there for a second.
+
+But the truth is…
+
+When I look at the bigger picture of us lately, it doesn’t feel like walls at all.
+
+If anything, it feels like the opposite.
 
 It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything.
 
-Somewhere along the way, you became a place that feels a little like home to me.`
+At least from my side, I feel very safe with you.
+
+Somewhere along the way, you became a place that feels a little like home to me.
+
+Not because I always have a problem to solve…
+
+But because I know there’s someone I can talk to.
+
+Someone I can go to without thinking that they’ll add more pressure to my mind.
+
+And honestly…
+
+That kind of calm.
+
+That kind of peace.
+
+Is a little mind-blowing.
+
+Maybe that’s exactly why I act the way I do sometimes.
+
+I know I can be intense sometimes…
+
+but you still stay.`;
 
 let i = 0
 let speed = 110
@@ -139,33 +183,31 @@ function typeWriter(){
 if(i < message.length){
 
 let textElement = document.getElementById("text")
+let box = document.getElementById("box")
 
 textElement.innerHTML += message.charAt(i)
 
-/* اهتزاز */
 textElement.classList.add("typing")
 setTimeout(()=>textElement.classList.remove("typing"),80)
 
-/* صوت */
 typingSound.currentTime = 0
 typingSound.play().catch(()=>{})
 
 i++
 
-/* scroll تلقائي */
-window.scrollTo({
-top: document.body.scrollHeight,
-behavior: "smooth"
-})
+box.scrollTop = box.scrollHeight
 
 setTimeout(typeWriter, speed)
 
-}
+}else{
+
+document.getElementById("loveImage").classList.add("showImage")
 
 }
 
-/* يبدأ عند لمس الشاشة */
+}
 
+/* يبدأ عند الضغط */
 document.body.addEventListener("click",()=>{
 typeWriter()
 },{once:true})
