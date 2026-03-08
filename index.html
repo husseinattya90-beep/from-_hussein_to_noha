@@ -12,53 +12,71 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#0b1d2a;
+background:#07131f;
 overflow:hidden;
-font-family:Arial;
+font-family:Georgia, serif;
 color:white;
 text-align:center;
 }
 
+/* الصورة */
 img{
 position:absolute;
 width:100%;
 height:100%;
 object-fit:cover;
-animation:zoom 25s infinite alternate;
+animation:zoom 40s infinite alternate ease-in-out;
 }
 
 @keyframes zoom{
 from{transform:scale(1);}
-to{transform:scale(1.1);}
+to{transform:scale(1.15);}
 }
 
-.text{
-position:relative;
-max-width:700px;
-font-size:20px;
-line-height:1.6;
-padding:20px;
-background:rgba(0,0,0,0.35);
-border-radius:15px;
-animation:fade 4s ease;
-}
-
-@keyframes fade{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
-}
-
+/* النجوم */
 .stars{
 position:absolute;
 width:100%;
 height:100%;
 background:url("https://www.transparenttextures.com/patterns/stardust.png");
-animation:moveStars 60s linear infinite;
+animation:starsMove 120s linear infinite;
+opacity:0.7;
 }
 
-@keyframes moveStars{
+@keyframes starsMove{
 from{background-position:0 0;}
-to{background-position:1000px 1000px;}
+to{background-position:2000px 2000px;}
+}
+
+/* صندوق النص */
+.container{
+position:relative;
+max-width:850px;
+padding:40px;
+background:rgba(0,0,0,0.45);
+border-radius:20px;
+backdrop-filter:blur(3px);
+}
+
+/* النص */
+#text{
+font-size:32px;
+line-height:1.8;
+}
+
+/* مؤشر الكتابة */
+.cursor{
+display:inline-block;
+width:3px;
+background:white;
+margin-left:5px;
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+0%{opacity:1}
+50%{opacity:0}
+100%{opacity:1}
 }
 
 </style>
@@ -70,25 +88,48 @@ to{background-position:1000px 1000px;}
 
 <div class="stars"></div>
 
-<div class="text">
-
-I kept thinking about our conversation yesterday.
-
-Somewhere in the middle of our joking, I think I took your words in a different direction.
-
-Maybe for a moment I felt like I had to explain my way of thinking.
-
-But the truth is…
-
-When I look at the bigger picture of us lately, it doesn’t feel like walls.
-
-It feels like two people who are comfortable with each other.
-
-Somewhere along the way, you became a place that feels a little like home to me.
-
-And maybe that’s exactly why I act the way I do sometimes.
-
+<div class="container">
+<span id="text"></span><span class="cursor"></span>
 </div>
+
+<script>
+
+const message = `I kept thinking about our conversation yesterday.
+
+Somewhere in the middle of our joking, I think I took your words in a different direction. I'm not even sure why. Maybe for a moment I felt like I had to explain my way of thinking, or prove something that I didn’t actually need to prove.
+
+And maybe, without noticing, I put a small wall there for a second.
+
+But the truth is… when I look at the bigger picture of us lately, it doesn’t feel like walls at all.
+
+If anything, it feels like the opposite.
+
+It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything. At least from my side, I feel very safe with you.
+
+Somewhere along the way, you became a place that feels a little like home to me. Not because I always have a problem to solve, but because I know there’s someone I can talk to, someone I can go to without thinking that they’ll add more pressure to my mind.
+
+And honestly, that kind of calm… that kind of peace… is a little mind-blowing.
+
+By the way, if you remember the "equation" I was talking about yesterday…
+
+I think this is the answer I found.
+
+And maybe that’s exactly why I act the way I do sometimes.`
+
+let i = 0
+let speed = 40
+
+function typeWriter(){
+if(i < message.length){
+document.getElementById("text").innerHTML += message.charAt(i)
+i++
+setTimeout(typeWriter, speed)
+}
+}
+
+typeWriter()
+
+</script>
 
 </body>
 </html>
