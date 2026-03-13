@@ -27,7 +27,6 @@ border-radius:14px;
 padding:25px;
 box-shadow:0 10px 40px rgba(0,0,0,0.5);
 overflow-y:auto;
-scroll-behavior:smooth;
 }
 
 img{
@@ -64,7 +63,7 @@ animation:blink 1s infinite;
 
 <div class="container" id="box">
 
-<img src="./grateful.png" alt="grateful">
+<img src="image.png">
 
 <div id="text"></div><span class="cursor"></span>
 
@@ -76,20 +75,15 @@ const message = `I just wanted to say thank you.
 
 Thank you for staying with me while I was feeling down, for listening to me even when I didn’t know how to explain what I was feeling.
 
-Thank you for trying so hard to pull me out of that mood, joking with me, telling stories just to make me laugh, and not giving up on making me feel better.
+Thank you for trying so hard to pull me out of that mood, joking with me, telling stories just to make me laugh.
 
-You might think it was something small, but for me it meant a lot. More than you can imagine.
+You might think it was something small, but for me it meant a lot.
 
 Honestly, I didn’t expect to ever feel this comfortable opening my heart to someone the way I do with you.
 
-Being able to talk to you and feel understood and lighter afterwards is something really special to me.
-
-So thank you… for your patience, your kindness, and for simply being you.
-
-You made a hard moment much easier, and I’m really grateful for that.`;
+So thank you… for your patience, your kindness, and for simply being you.`;
 
 let i = 0;
-const speed = 35;
 
 function typeWriter(){
 
@@ -101,7 +95,7 @@ i++;
 let box = document.getElementById("box");
 box.scrollTop = box.scrollHeight;
 
-setTimeout(typeWriter, speed);
+setTimeout(typeWriter, 35);
 
 }
 
