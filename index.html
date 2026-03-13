@@ -2,82 +2,52 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Noha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
 
 <style>
 
 body{
 margin:0;
-height:100vh;
+font-family:"Courier New", monospace;
+background:#0f0f14;
+color:white;
 display:flex;
 justify-content:center;
 align-items:center;
-background:black;
-font-family:"Courier New", monospace;
-overflow:hidden;
-color:white;
+height:100vh;
 }
 
-/* الخلفية */
-.background{
-position:fixed;
-width:100%;
-height:100%;
-background-image:url("46024a7c5f55139bf3c04a695fd684c0.jpg");
-background-size:cover;
-background-position:center;
-animation:zoom 40s infinite alternate;
-z-index:-2;
-}
-
-@keyframes zoom{
-from{transform:scale(1);}
-to{transform:scale(1.1);}
-}
-
-/* النجوم */
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-background:url("https://www.transparenttextures.com/patterns/stardust.png");
-opacity:0.4;
-animation:moveStars 120s linear infinite;
-z-index:-1;
-}
-
-@keyframes moveStars{
-from{background-position:0 0;}
-to{background-position:1000px 1000px;}
-}
-
-/* صندوق النص */
-.textBox{
-max-width:900px;
+.container{
 width:90%;
-height:70vh;
-padding:40px;
+max-width:700px;
+height:80vh;
+background:#1b1b22;
+border-radius:14px;
+padding:25px;
+box-shadow:0 10px 40px rgba(0,0,0,0.5);
 overflow-y:auto;
-text-align:center;
+scroll-behavior:smooth;
 }
 
-/* النص */
+img{
+width:100%;
+border-radius:12px;
+margin-bottom:25px;
+}
+
 #text{
-font-size:46px;
-line-height:1.8;
+font-size:18px;
+line-height:1.7;
 white-space:pre-wrap;
-text-shadow:
-0 0 10px rgba(0,0,0,0.9),
-0 0 25px rgba(0,0,0,0.9);
 }
 
-/* المؤشر */
 .cursor{
 display:inline-block;
-width:4px;
-height:45px;
+width:8px;
+height:20px;
 background:white;
-margin-left:6px;
+margin-left:4px;
 animation:blink 1s infinite;
 }
 
@@ -87,94 +57,57 @@ animation:blink 1s infinite;
 100%{opacity:1}
 }
 
-/* اهتزاز الكتابة */
-@keyframes shake{
-0%{transform:translate(0,0)}
-25%{transform:translate(1px,-1px)}
-50%{transform:translate(-1px,1px)}
-75%{transform:translate(1px,1px)}
-100%{transform:translate(0,0)}
-}
-
-.typing{
-animation:shake 0.08s;
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="background"></div>
-<div class="stars"></div>
+<div class="container" id="box">
 
-<div class="textBox" id="box">
-<span id="text"></span><span class="cursor"></span>
+<img src="grateful.jpg" alt="grateful">
+
+<div id="text"></div><span class="cursor"></span>
+
 </div>
 
 <script>
 
-const message = `I kept thinking about our conversation yesterday.
+const message = `I just wanted to say thank you.
 
-Somewhere in the middle of our joking, I think I took your words in a different direction. I'm not even sure why. Maybe for a moment I felt like I had to explain my way of thinking, or prove something that I didn’t actually need to prove.
+Thank you for staying with me while I was feeling down, for listening to me even when I didn’t know how to explain what I was feeling.
 
-And maybe, without noticing, I put a small wall there for a second.
+Thank you for trying so hard to pull me out of that mood, joking with me, telling stories just to make me laugh, and not giving up on making me feel better.
 
-But the truth is… when I look at the bigger picture of us lately, it doesn’t feel like walls at all.
+You might think it was something small, but for me it meant a lot. More than you can imagine.
 
-If anything, it feels like the opposite.
+Honestly, I didn’t expect to ever feel this comfortable opening my heart to someone the way I do with you.
 
-It feels like two people who are so comfortable with each other that even the small disagreements don’t shake anything. At least from my side, I feel very safe with you.
+Being able to talk to you and feel understood and lighter afterwards is something really special to me.
 
-Somewhere along the way, you became a place that feels a little like home to me. Not because I always have a problem to solve, but because I know there’s someone I can talk to, someone I can go to without thinking that they’ll add more pressure to my mind.
+So thank you… for your patience, your kindness, and for simply being you.
 
-And honestly, that kind of calm… that kind of peace… is a little mind-blowing.
+You made a hard moment much easier, and I’m really grateful for that.`;
 
-By the way, if you remember the "equation" I was talking about yesterday…
-
-I think this is the answer I found.
-
-And maybe that’s exactly why I act the way I do sometimes.
-
-I know I can be intense sometimes… but you still stay 🐺`;
-
-let i = 0
-let speed = 110
-
-const typingSound = new Audio("typewriter.mp3")
+let i = 0;
+const speed = 35;
 
 function typeWriter(){
 
 if(i < message.length){
 
-let textElement = document.getElementById("text")
-let box = document.getElementById("box")
+document.getElementById("text").innerHTML += message.charAt(i);
+i++;
 
-textElement.innerHTML += message.charAt(i)
+let box = document.getElementById("box");
+box.scrollTop = box.scrollHeight;
 
-/* اهتزاز */
-textElement.classList.add("typing")
-setTimeout(()=>textElement.classList.remove("typing"),80)
-
-/* صوت */
-typingSound.currentTime = 0
-typingSound.play().catch(()=>{})
-
-i++
-
-/* scroll داخل الصندوق */
-box.scrollTop = box.scrollHeight
-
-setTimeout(typeWriter, speed)
+setTimeout(typeWriter, speed);
 
 }
 
 }
 
-/* يبدأ عند لمسة الشاشة */
-document.body.addEventListener("click",()=>{
-typeWriter()
-},{once:true})
+typeWriter();
 
 </script>
 
