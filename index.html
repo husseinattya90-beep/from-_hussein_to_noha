@@ -17,6 +17,12 @@ body, html {
   object-fit: cover;
   z-index: -1;
   filter: brightness(0.7);
+  animation: bgZoom 20s infinite alternate;
+}
+
+@keyframes bgZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
 }
 
 #game-ui {
@@ -61,7 +67,7 @@ button:hover {
 
 <body>
 
-<img id="bg" src="bg.gif" alt="Background">
+<img id="bg" src="IMG-20260316-WA0005.jpg" alt="Background">
 
 <div id="game-ui">
   <h1 class="animate__animated animate__fadeInDown">🎮 قد إيه اللعبة فاهماك؟</h1>
@@ -71,8 +77,10 @@ button:hover {
   <button id="start-btn">ابدأ اللعبة 🎉</button>
 </div>
 
-<!-- الصوت هيشتغل بعد تفاعل المستخدم -->
+<!-- الأصوات -->
 <audio id="music" src="sky-high.mp3" loop></audio>
+<audio id="click-sound" src="click.mp3"></audio>
+<audio id="funny-sound" src="funny.mp3"></audio>
 
 <script>
 const questions = [
@@ -80,30 +88,19 @@ const questions = [
   { q:"عندك يوم فاضي هتعمل إيه؟", expected:"تنام", options:["تنام","تتفرج على حاجة","تتمشى","تزور صديقة","تروح مقهى"] },
   { q:"أكتر حاجة بتضيع وقتك؟", expected:"TikTok", options:["TikTok","YouTube","Instagram","قراءة مقالات قصيرة"] },
   { q:"أكتر كلمة بتقولها؟", expected:"ماشي", options:["ماشي","تمام","حاضر","يلا بينا"] },
-  {
-    q:"مين ساعدك أكتر في إعداد النظام الأخير؟",
-    expected:"أنا 😏",
-    options:["أنا 😏","الفضائيين 👽","القطط 🐱","الجنيه المصري القديم 💸"]
-  },
-  {
-    q:"إيه أكتر حاجة ساعدتك توصل للمشروع ده بسرعة؟",
-    expected:"سحر السهر والتركيز العالي 🌙💪",
-    options:["سحر السهر والتركيز العالي 🌙💪","آلة الزمن ⏳","عصير برتقال سحري 🍊","قراءة كتب عن التنجيم 🔮"]
-  },
-  {
-    q:"لو حد محتاج مساعدة في النظام، هتكوني مستعدة تساعد؟",
-    expected:"أكيد 😎",
-    options:["أكيد 😎","أجيب حصان 🐴","أستعين بالنينجا 🥷","أتصل بالرجل العنكبوت 🕷️"]
-  }
+  { q:"مين ساعدك أكتر في إعداد النظام الأخير؟", expected:"أنا 😏", options:["أنا 😏","الفضائيين 👽","القطط 🐱","الجنيه المصري القديم 💸"] },
+  { q:"إيه أكتر حاجة ساعدتك توصل للمشروع ده بسرعة؟", expected:"سحر السهر والتركيز العالي 🌙💪", options:["سحر السهر والتركيز العالي 🌙💪","آلة الزمن ⏳","عصير برتقال سحري 🍊","قراءة كتب عن التنجيم 🔮"] },
+  { q:"لو حد محتاج مساعدة في النظام، هتكوني مستعدة تساعد؟", expected:"أكيد 😎", options:["أكيد 😎","أجيب حصان 🐴","أستعين بالنينجا 🥷","أتصل بالرجل العنكبوت 🕷️"] }
 ];
 
 let current = 0;
-const ui = document.getElementById("game-ui");
 const startBtn = document.getElementById("start-btn");
 const container = document.getElementById("question-container");
 const gifAnswer = document.getElementById("gifAnswer");
 const finalMsg = document.getElementById("final-msg");
 const music = document.getElementById("music");
+const clickSound = document.getElementById("click-sound");
+const funnySound = document.getElementById("funny-sound");
 
 startBtn.onclick = () => {
   startBtn.style.display = "none";
@@ -124,11 +121,18 @@ function showQuestion(){
 }
 
 function checkAnswer(opt){
+  clickSound.currentTime = 0;
+  clickSound.play();
+
   if(opt !== questions[current].expected){
     gifAnswer.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
     gifAnswer.className = "animate__animated animate__bounceIn";
     gifAnswer.style.display = "block";
+
+    funnySound.currentTime = 0;
+    funnySound.play();
   }
+
   current++;
   if(current < questions.length){
     setTimeout(showQuestion, 900);
