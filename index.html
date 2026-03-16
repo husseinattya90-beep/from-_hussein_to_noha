@@ -1,108 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
-
+<title>🎮 قد إيه اللعبة فاهماك؟</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" crossorigin="anonymous" />
 <style>
-
-body{
-margin:0;
-font-family:"Courier New", monospace;
-background:#0f0f14;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+body, html {
+  height: 100%; margin: 0; padding: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-.container{
-width:90%;
-max-width:700px;
-height:80vh;
-background:#1b1b22;
-border-radius:14px;
-padding:25px;
-box-shadow:0 10px 40px rgba(0,0,0,0.5);
-overflow-y:auto;
+#bg {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.7);
 }
 
-img{
-width:100%;
-border-radius:12px;
-margin-bottom:25px;
+#game-ui {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.85);
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 520px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
 
-#text{
-font-size:18px;
-line-height:1.7;
-white-space:pre-wrap;
+h1 { margin-top: 0; font-size: 1.9em; }
+button {
+  margin: 8px; padding: 12px 28px;
+  font-size: 16px; cursor: pointer;
+  border: none; border-radius: 12px;
+  background: #2196f3; color: white;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+button:hover {
+  transform: scale(1.08);
+  background: #1976d2;
 }
 
-.cursor{
-display:inline-block;
-width:8px;
-height:20px;
-background:white;
-margin-left:4px;
-animation:blink 1s infinite;
+#gifAnswer {
+  display: none; width: 180px;
+  margin: 15px auto;
 }
 
-@keyframes blink{
-0%{opacity:1}
-50%{opacity:0}
-100%{opacity:1}
+#final-msg {
+  display: none;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #222;
+  text-align: center;
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="container" id="box">
+<img id="bg" src="bg.gif" alt="Background">
 
-<img src="image.png">
-
-<div id="text"></div><span class="cursor"></span>
-
+<div id="game-ui">
+  <h1 class="animate__animated animate__fadeInDown">🎮 قد إيه اللعبة فاهماك؟</h1>
+  <div id="question-container"></div>
+  <img id="gifAnswer" src="">
+  <div id="final-msg"></div>
+  <button id="start-btn">ابدأ اللعبة 🎉</button>
 </div>
 
+<!-- الصوت هيشتغل بعد تفاعل المستخدم -->
+<audio id="music" src="sky-high.mp3" loop></audio>
+
 <script>
+const questions = [
+  { q:"إيه أكتر حاجة بتحب تاكلها؟", expected:"جلاش", options:["جلاش","بيتزا","برجر","سلطة 😆"] },
+  { q:"عندك يوم فاضي هتعمل إيه؟", expected:"تنام", options:["تنام","تتفرج على حاجة","تتمشى","تزور صديقة","تروح مقهى"] },
+  { q:"أكتر حاجة بتضيع وقتك؟", expected:"TikTok", options:["TikTok","YouTube","Instagram","قراءة مقالات قصيرة"] },
+  { q:"أكتر كلمة بتقولها؟", expected:"ماشي", options:["ماشي","تمام","حاضر","يلا بينا"] },
+  {
+    q:"مين ساعدك أكتر في إعداد النظام الأخير؟",
+    expected:"أنا 😏",
+    options:["أنا 😏","الفضائيين 👽","القطط 🐱","الجنيه المصري القديم 💸"]
+  },
+  {
+    q:"إيه أكتر حاجة ساعدتك توصل للمشروع ده بسرعة؟",
+    expected:"سحر السهر والتركيز العالي 🌙💪",
+    options:["سحر السهر والتركيز العالي 🌙💪","آلة الزمن ⏳","عصير برتقال سحري 🍊","قراءة كتب عن التنجيم 🔮"]
+  },
+  {
+    q:"لو حد محتاج مساعدة في النظام، هتكوني مستعدة تساعد؟",
+    expected:"أكيد 😎",
+    options:["أكيد 😎","أجيب حصان 🐴","أستعين بالنينجا 🥷","أتصل بالرجل العنكبوت 🕷️"]
+  }
+];
 
-const message = `I just wanted to say thank you.
+let current = 0;
+const ui = document.getElementById("game-ui");
+const startBtn = document.getElementById("start-btn");
+const container = document.getElementById("question-container");
+const gifAnswer = document.getElementById("gifAnswer");
+const finalMsg = document.getElementById("final-msg");
+const music = document.getElementById("music");
 
-Thank you for staying with me while I was feeling down, for listening to me even when I didn’t know how to explain what I was feeling.
+startBtn.onclick = () => {
+  startBtn.style.display = "none";
+  music.play();
+  showQuestion();
+};
 
-Thank you for trying so hard to pull me out of that mood, joking with me, telling stories just to make me laugh.
-
-You might think it was something small, but for me it meant a lot.
-
-Honestly, I didn’t expect to ever feel this comfortable opening my heart to someone the way I do with you.
-
-So thank you… for your patience, your kindness, and for simply being you.`;
-
-let i = 0;
-
-function typeWriter(){
-
-if(i < message.length){
-
-document.getElementById("text").innerHTML += message.charAt(i);
-i++;
-
-let box = document.getElementById("box");
-box.scrollTop = box.scrollHeight;
-
-setTimeout(typeWriter, 35);
-
+function showQuestion(){
+  gifAnswer.style.display = "none";
+  container.innerHTML = "";
+  const q = questions[current];
+  container.innerHTML += `<h2 class="animate__animated animate__fadeIn">${q.q}</h2>`;
+  q.options.forEach(opt => {
+    container.innerHTML += `<button class="animate__animated animate__fadeInUp">${opt}</button>`;
+  });
+  const buttons = container.querySelectorAll("button");
+  buttons.forEach(btn => btn.onclick = () => checkAnswer(btn.innerText));
 }
 
+function checkAnswer(opt){
+  if(opt !== questions[current].expected){
+    gifAnswer.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
+    gifAnswer.className = "animate__animated animate__bounceIn";
+    gifAnswer.style.display = "block";
+  }
+  current++;
+  if(current < questions.length){
+    setTimeout(showQuestion, 900);
+  } else {
+    setTimeout(showFinal, 1200);
+  }
 }
 
-typeWriter();
-
+function showFinal(){
+  container.style.display = "none";
+  gifAnswer.style.display = "none";
+  finalMsg.style.display = "block";
+  finalMsg.className = "animate__animated animate__fadeInUp";
+  finalMsg.innerHTML = `
+  🎉 You did it! (…and don’t worry, no results or deadlines required 😎)<br><br>
+  I just want to remind you (again 😏) how incredibly proud I am of you.<br>
+  No matter the results, I’ve seen the amazing effort you put in, building everything from scratch.<br><br>
+  I know you’re super stressed with deadlines tomorrow, but trust me—you’re going to get there.<br>
+  Think about how far you’ve come in just one year: from not knowing how to move a camera to creating your own engine beyond Unreal.<br>
+  Your mind isn’t limited, and that’s exactly why you keep surprising everyone.<br><br>
+  Keep going like this.<br>
+  I believe in you, and I’ll keep saying it, because sometimes you forget—so here it is again:<br>
+  I’m so proud of you ❤️
+  `;
+}
 </script>
 
 </body>
