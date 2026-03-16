@@ -61,6 +61,7 @@ button:hover {
   line-height: 1.5;
   color: #222;
   text-align: center;
+  white-space: pre-line;
 }
 </style>
 </head>
@@ -77,7 +78,6 @@ button:hover {
   <button id="start-btn">ابدأ اللعبة 🎉</button>
 </div>
 
-<!-- الأصوات -->
 <audio id="music" src="sky-high.mp3" loop></audio>
 <audio id="click-sound" src="click.mp3"></audio>
 <audio id="funny-sound" src="funny.mp3"></audio>
@@ -135,10 +135,25 @@ function checkAnswer(opt){
 
   current++;
   if(current < questions.length){
-    setTimeout(showQuestion, 900);
+    // بطئ الانتقال بين الأسئلة
+    setTimeout(showQuestion, 1500);
   } else {
-    setTimeout(showFinal, 1200);
+    setTimeout(showFinal, 1500);
   }
+}
+
+// Machine Writer effect
+function typeWriter(text, element, speed = 40){
+  element.innerHTML = "";
+  let i = 0;
+  function type(){
+    if(i < text.length){
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
 }
 
 function showFinal(){
@@ -146,17 +161,21 @@ function showFinal(){
   gifAnswer.style.display = "none";
   finalMsg.style.display = "block";
   finalMsg.className = "animate__animated animate__fadeInUp";
-  finalMsg.innerHTML = `
-  🎉 You did it! (…and don’t worry, no results or deadlines required 😎)<br><br>
-  I just want to remind you (again 😏) how incredibly proud I am of you.<br>
-  No matter the results, I’ve seen the amazing effort you put in, building everything from scratch.<br><br>
-  I know you’re super stressed with deadlines tomorrow, but trust me—you’re going to get there.<br>
-  Think about how far you’ve come in just one year: from not knowing how to move a camera to creating your own engine beyond Unreal.<br>
-  Your mind isn’t limited, and that’s exactly why you keep surprising everyone.<br><br>
-  Keep going like this.<br>
-  I believe in you, and I’ll keep saying it, because sometimes you forget—so here it is again:<br>
-  I’m so proud of you ❤️
+  const finalText = `
+🎉 You did it! (…and don’t worry, no results or deadlines required 😎)
+
+I just want to remind you (again 😏) how incredibly proud I am of you.
+No matter the results, I’ve seen the amazing effort you put in, building everything from scratch.
+
+I know you’re super stressed with deadlines tomorrow, but trust me—you’re going to get there.
+Think about how far you’ve come in just one year: from not knowing how to move a camera to creating your own engine beyond Unreal.
+Your mind isn’t limited, and that’s exactly why you keep surprising everyone.
+
+Keep going like this.
+I believe in you, and I’ll keep saying it, because sometimes you forget—so here it is again:
+I’m so proud of you ❤️
   `;
+  typeWriter(finalText, finalMsg, 35); // سرعة الكتابة: 35ms لكل حرف
 }
 </script>
 
