@@ -8,24 +8,12 @@ cards.forEach(card => {
 
     const texts = card.querySelector(".texts");
 
-    if (!texts.classList.contains("show")) {
-      texts.classList.add("show");
-
-      const lines = texts.querySelectorAll("p");
-
-      lines.forEach((line, index) => {
-        setTimeout(() => {
-          line.style.opacity = "1";
-          line.style.transform = "translateY(0)";
-        }, index * 600);
-      });
-
+    if (texts.style.display !== "block") {
+      texts.style.display = "block";
       opened++;
 
       if (opened === cards.length) {
-        setTimeout(() => {
-          endMessage.style.display = "block";
-        }, 1000);
+        endMessage.style.display = "block";
       }
     }
 
