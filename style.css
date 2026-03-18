@@ -24,7 +24,7 @@ h1 {
   overflow: hidden;
   cursor: pointer;
   background: #1a1a1a;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
@@ -36,20 +36,42 @@ h1 {
   height: 250px;
   object-fit: cover;
   display: block;
+  transition: filter 0.7s ease, transform 0.5s ease;
 }
 
+/* الصورة مغلقة */
+.card.locked img {
+  filter: blur(10px) brightness(0.4);
+  transform: scale(1.05);
+}
+
+/* الصورة مفتوحة */
+.card.open img {
+  filter: blur(0px) brightness(1);
+  transform: scale(1);
+}
+
+/* النصوص */
 .texts {
-  display: none;
-  padding: 10px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 10px;
   background: rgba(0,0,0,0.8);
+  transition: opacity 0.7s ease, max-height 0.7s ease, padding 0.7s ease;
+}
+
+.texts.show {
+  opacity: 1;
+  max-height: 500px;
+  padding: 10px;
 }
 
 .texts p {
   margin: 5px 0;
-}
-
-.texts.show {
-  display: block;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .end-message {

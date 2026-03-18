@@ -6,14 +6,29 @@ let opened = 0;
 cards.forEach(card => {
   card.addEventListener("click", () => {
 
-    const texts = card.querySelector(".texts");
+    if (!card.classList.contains("open")) {
 
-    if (!texts.classList.contains("show")) {
+      card.classList.remove("locked");
+      card.classList.add("open");
+
+      const texts = card.querySelector(".texts");
       texts.classList.add("show");
+
+      // Fade in each paragraph line by line
+      const lines = texts.querySelectorAll("p");
+      lines.forEach((line, index) => {
+        setTimeout(() => {
+          line.style.opacity = 1;
+          line.style.transform = "translateY(0)";
+        }, index * 400);
+      });
+
       opened++;
 
       if (opened === cards.length) {
-        endMessage.style.display = "block";
+        setTimeout(() => {
+          endMessage.style.display = "block";
+        }, 1000);
       }
     }
 
