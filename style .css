@@ -1,46 +1,61 @@
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: #0f0f0f;
   color: white;
-  overflow: hidden;
   text-align: center;
+  padding: 20px;
 }
 
-.screen {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
+h1 {
+  margin-bottom: 30px;
+}
+
+.game-board {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-
-  opacity: 0;
-  transform: scale(0.9);
-  transition: all 0.7s ease;
+  gap: 20px;
 }
 
-.screen.active {
-  opacity: 1;
-  transform: scale(1);
+.card {
+  width: 250px;
+  height: 250px;
+  position: relative;
+  cursor: pointer;
 }
 
-img {
-  width: 300px;
+.card img {
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
-  margin: 20px 0;
-  box-shadow: 0 0 30px rgba(255,255,255,0.2);
+  object-fit: cover;
+  transition: transform 0.5s;
 }
 
-.texts p {
+.card:hover img {
+  transform: scale(1.05);
+}
+
+.texts {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.7);
+  padding: 10px;
+  border-radius: 0 0 20px 20px;
   opacity: 0;
   transform: translateY(20px);
-  transition: 0.5s;
-  margin: 5px 0;
+  transition: all 0.5s;
 }
 
-.texts p.show {
+.texts.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+.end-message {
+  margin-top: 40px;
+  display: none;
 }

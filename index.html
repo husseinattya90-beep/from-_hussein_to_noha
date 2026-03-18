@@ -2,57 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Surprise Memory Game 👀</title>
+<title>Memory Game Surprise </title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Start Screen -->
-<div class="screen active" id="start">
-  <h1>Loading game...</h1>
-  <p>please wait 👀</p>
-</div>
+<h1>Click on the pictures to reveal the memory </h1>
 
-<!-- Darts -->
-<div class="screen" id="darts">
-  <img src="images/Darts.jpg">
-  <div class="texts">
-    <p>yeah yeah... I won here 😎</p>
-    <p>I still think I won btw 👀</p>
-    <p>you were so confident here 😂</p>
-  </div>
-</div>
+<div class="game-board">
 
-<!-- Punch / Racing -->
-<div class="screen" id="punch">
-  <img src="images/Racing.jpg">
-  <div class="texts">
-    <p>you thought you were strong huh 🥊😂</p>
-    <p>not bad tho… I’m impressed 😏</p>
-  </div>
-</div>
-
-<!-- Bedouin -->
-<div class="screen" id="bedouin">
-  <img src="images/3rabawy.jpg">
-  <div class="texts">
-    <p>this one hits different... 🌙</p>
-    <p>calm… quiet… no chaos for once 👀</p>
+  <div class="card" id="card1">
+    <img src="images/3rabawy.jpg">
+    <div class="texts">
+      <p>this one hits different... </p>
+      <p>calm� quiet� no chaos for once </p>
+    </div>
   </div>
 
-  <img src="images/3rabawya2.jpg">
-  <div class="texts">
-    <p>okay this is actually cute 😂</p>
-    <p>not gonna lie… this is one of my favorites ❤️</p>
-    <p>this day was good… yeah I admit it 😏</p>
+  <div class="card" id="card2">
+    <img src="images/3rabawya2.jpg">
+    <div class="texts">
+      <p>okay this is actually cute </p>
+      <p>not gonna lie� this is one of my favorites </p>
+      <p>this day was good� yeah I admit it </p>
+    </div>
   </div>
+
+  <div class="card" id="card3">
+    <img src="images/Darts.jpg">
+    <div class="texts">
+      <p>yeah yeah... I won here </p>
+      <p>I still think I won btw </p>
+      <p>you were so confident here </p>
+    </div>
+  </div>
+
+  <div class="card" id="card4">
+    <img src="images/Racing.jpg">
+    <div class="texts">
+      <p>you thought you were strong huh </p>
+      <p>not bad tho� I�m impressed </p>
+    </div>
+  </div>
+
 </div>
 
-<!-- End Screen -->
-<div class="screen" id="end">
+<div class="end-message">
   <h2>not gonna lie...</h2>
-  <p>I’d choose all these moments again... with you ❤️</p>
-  <p>we should do this again… just saying 👀</p>
+  <p>I�d choose all these moments again... with you </p>
+  <p>we should do this again� just saying </p>
 </div>
 
 <script src="script.js"></script>
