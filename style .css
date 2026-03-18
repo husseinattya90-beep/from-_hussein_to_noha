@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f0f0f;
+  color: white;
+  overflow: hidden;
+  text-align: center;
+}
+
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.7s ease;
+}
+
+.screen.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+img {
+  width: 300px;
+  border-radius: 20px;
+  margin: 20px 0;
+  box-shadow: 0 0 30px rgba(255,255,255,0.2);
+}
+
+.texts p {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.5s;
+  margin: 5px 0;
+}
+
+.texts p.show {
+  opacity: 1;
+  transform: translateY(0);
+}

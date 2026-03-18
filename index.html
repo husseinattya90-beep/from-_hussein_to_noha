@@ -1,183 +1,60 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>🎮 قد إيه اللعبة فاهماك؟</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" crossorigin="anonymous" />
-<style>
-body, html {
-  height: 100%; margin: 0; padding: 0;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-}
-
-#bg {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  filter: brightness(0.7);
-  animation: bgZoom 20s infinite alternate;
-}
-
-@keyframes bgZoom {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.05); }
-}
-
-#game-ui {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255,255,255,0.85);
-  border-radius: 20px;
-  padding: 30px;
-  width: 90%;
-  max-width: 520px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-}
-
-h1 { margin-top: 0; font-size: 1.9em; }
-button {
-  margin: 8px; padding: 12px 28px;
-  font-size: 16px; cursor: pointer;
-  border: none; border-radius: 12px;
-  background: #2196f3; color: white;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-button:hover {
-  transform: scale(1.08);
-  background: #1976d2;
-}
-
-#gifAnswer {
-  display: none; width: 180px;
-  margin: 15px auto;
-}
-
-#final-msg {
-  display: none;
-  font-size: 18px;
-  line-height: 1.5;
-  color: #222;
-  text-align: center;
-  white-space: pre-line;
-}
-</style>
+<title>Surprise Memory Game 👀</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<img id="bg" src="IMG-20260316-WA0005.jpg" alt="Background">
-
-<div id="game-ui">
-  <h1 class="animate__animated animate__fadeInDown">🎮 قد إيه اللعبة فاهماك؟</h1>
-  <div id="question-container"></div>
-  <img id="gifAnswer" src="">
-  <div id="final-msg"></div>
-  <button id="start-btn">ابدأ اللعبة 🎉</button>
+<!-- Start Screen -->
+<div class="screen active" id="start">
+  <h1>Loading game...</h1>
+  <p>please wait 👀</p>
 </div>
 
-<audio id="music" src="sky-high.mp3" loop></audio>
-<audio id="click-sound" src="click.mp3"></audio>
-<audio id="funny-sound" src="funny.mp3"></audio>
+<!-- Darts -->
+<div class="screen" id="darts">
+  <img src="images/Darts.jpg">
+  <div class="texts">
+    <p>yeah yeah... I won here 😎</p>
+    <p>I still think I won btw 👀</p>
+    <p>you were so confident here 😂</p>
+  </div>
+</div>
 
-<script>
-const questions = [
-  { q:"إيه أكتر حاجة بتحب تاكلها؟", expected:"جلاش", options:["جلاش","بيتزا","برجر","سلطة 😆"] },
-  { q:"عندك يوم فاضي هتعمل إيه؟", expected:"تنام", options:["تنام","تتفرج على حاجة","تتمشى","تزور صديقة","تروح مقهى"] },
-  { q:"أكتر حاجة بتضيع وقتك؟", expected:"TikTok", options:["TikTok","YouTube","Instagram","قراءة مقالات قصيرة"] },
-  { q:"أكتر كلمة بتقولها؟", expected:"ماشي", options:["ماشي","تمام","حاضر","يلا بينا"] },
-  { q:"مين ساعدك أكتر في إعداد النظام الأخير؟", expected:"أنا 😏", options:["أنا 😏","الفضائيين 👽","القطط 🐱","الجنيه المصري القديم 💸"] },
-  { q:"إيه أكتر حاجة ساعدتك توصل للمشروع ده بسرعة؟", expected:"سحر السهر والتركيز العالي 🌙💪", options:["سحر السهر والتركيز العالي 🌙💪","آلة الزمن ⏳","عصير برتقال سحري 🍊","قراءة كتب عن التنجيم 🔮"] },
-  { q:"لو حد محتاج مساعدة في النظام، هتكوني مستعدة تساعد؟", expected:"أكيد 😎", options:["أكيد 😎","أجيب حصان 🐴","أستعين بالنينجا 🥷","أتصل بالرجل العنكبوت 🕷️"] }
-];
+<!-- Punch / Racing -->
+<div class="screen" id="punch">
+  <img src="images/Racing.jpg">
+  <div class="texts">
+    <p>you thought you were strong huh 🥊😂</p>
+    <p>not bad tho… I’m impressed 😏</p>
+  </div>
+</div>
 
-let current = 0;
-const startBtn = document.getElementById("start-btn");
-const container = document.getElementById("question-container");
-const gifAnswer = document.getElementById("gifAnswer");
-const finalMsg = document.getElementById("final-msg");
-const music = document.getElementById("music");
-const clickSound = document.getElementById("click-sound");
-const funnySound = document.getElementById("funny-sound");
+<!-- Bedouin -->
+<div class="screen" id="bedouin">
+  <img src="images/3rabawy.jpg">
+  <div class="texts">
+    <p>this one hits different... 🌙</p>
+    <p>calm… quiet… no chaos for once 👀</p>
+  </div>
 
-startBtn.onclick = () => {
-  startBtn.style.display = "none";
-  music.play();
-  showQuestion();
-};
+  <img src="images/3rabawya2.jpg">
+  <div class="texts">
+    <p>okay this is actually cute 😂</p>
+    <p>not gonna lie… this is one of my favorites ❤️</p>
+    <p>this day was good… yeah I admit it 😏</p>
+  </div>
+</div>
 
-function showQuestion(){
-  gifAnswer.style.display = "none";
-  container.innerHTML = "";
-  const q = questions[current];
-  container.innerHTML += `<h2 class="animate__animated animate__fadeIn">${q.q}</h2>`;
-  q.options.forEach(opt => {
-    container.innerHTML += `<button class="animate__animated animate__fadeInUp">${opt}</button>`;
-  });
-  const buttons = container.querySelectorAll("button");
-  buttons.forEach(btn => btn.onclick = () => checkAnswer(btn.innerText));
-}
+<!-- End Screen -->
+<div class="screen" id="end">
+  <h2>not gonna lie...</h2>
+  <p>I’d choose all these moments again... with you ❤️</p>
+  <p>we should do this again… just saying 👀</p>
+</div>
 
-function checkAnswer(opt){
-  clickSound.currentTime = 0;
-  clickSound.play();
-
-  if(opt !== questions[current].expected){
-    gifAnswer.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
-    gifAnswer.className = "animate__animated animate__bounceIn";
-    gifAnswer.style.display = "block";
-
-    funnySound.currentTime = 0;
-    funnySound.play();
-  }
-
-  current++;
-  if(current < questions.length){
-    // بطئ الانتقال بين الأسئلة
-    setTimeout(showQuestion, 1500);
-  } else {
-    setTimeout(showFinal, 1500);
-  }
-}
-
-// Machine Writer effect
-function typeWriter(text, element, speed = 40){
-  element.innerHTML = "";
-  let i = 0;
-  function type(){
-    if(i < text.length){
-      element.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    }
-  }
-  type();
-}
-
-function showFinal(){
-  container.style.display = "none";
-  gifAnswer.style.display = "none";
-  finalMsg.style.display = "block";
-  finalMsg.className = "animate__animated animate__fadeInUp";
-  const finalText = `
-🎉 You did it! (…and don’t worry, no results or deadlines required 😎)
-
-I just want to remind you (again 😏) how incredibly proud I am of you.
-No matter the results, I’ve seen the amazing effort you put in, building everything from scratch.
-
-I know you’re super stressed with deadlines tomorrow, but trust me—you’re going to get there.
-Think about how far you’ve come in just one year: from not knowing how to move a camera to creating your own engine beyond Unreal.
-Your mind isn’t limited, and that’s exactly why you keep surprising everyone.
-
-Keep going like this.
-I believe in you, and I’ll keep saying it, because sometimes you forget—so here it is again:
-I’m so proud of you ❤️
-  `;
-  typeWriter(finalText, finalMsg, 35); // سرعة الكتابة: 35ms لكل حرف
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
