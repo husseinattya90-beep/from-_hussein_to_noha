@@ -7,6 +7,10 @@ body {
   padding: 20px;
 }
 
+h1 {
+  margin-bottom: 30px;
+}
+
 .game-board {
   display: flex;
   flex-wrap: wrap;
@@ -34,22 +38,27 @@ body {
   display: block;
 }
 
-/* النصوص مخفية بس الصورة دايمًا باينة */
 .texts {
-  padding: 10px;
   display: none;
+  padding: 10px;
   background: rgba(0,0,0,0.8);
-}
-
-.texts.show {
-  display: block;
 }
 
 .texts p {
   margin: 5px 0;
 }
 
+.texts.show {
+  display: block;
+}
+
 .end-message {
   margin-top: 40px;
   display: none;
+}
+
+.final-msg {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #ff9db5;
 }

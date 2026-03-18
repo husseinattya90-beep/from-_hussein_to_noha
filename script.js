@@ -8,8 +8,8 @@ cards.forEach(card => {
 
     const texts = card.querySelector(".texts");
 
-    if (texts.style.display !== "block") {
-      texts.style.display = "block";
+    if (!texts.classList.contains("show")) {
+      texts.classList.add("show");
       opened++;
 
       if (opened === cards.length) {
