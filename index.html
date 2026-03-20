@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Eid Scene</title>
-<link rel="stylesheet" href="style_new.css">
+<title>Eid Cartoon Scene</title>
+<link rel="stylesheet" href="style_svg.css">
 </head>
 <body>
 
@@ -12,27 +12,45 @@
   <!--  -->
   <div class="ground"></div>
 
-  <!--  -->
-  <div class="girl" id="girl">
-    <div class="head"></div>
-    <div class="body"></div>
-    <div class="arm"></div>
-    <div class="leg left"></div>
-    <div class="leg right"></div>
-  </div>
+  <!--  SVG -->
+  <svg id="girl" class="girl" width="80" height="120" viewBox="0 0 80 120">
+    <!--  -->
+    <rect x="30" y="40" width="20" height="50" fill="#FFB6C1" rx="5"/>
+    <!--  -->
+    <circle cx="40" cy="25" r="15" fill="#FFD1DC"/>
+    <!--  -->
+    <circle cx="35" cy="22" r="2" fill="#000"/>
+    <circle cx="45" cy="22" r="2" fill="#000"/>
+    <!--  -->
+    <path d="M25,25 Q40,10 55,25" fill="#FF69B4"/>
+    <!--  -->
+    <line x1="30" y1="50" x2="10" y2="70" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="70" y2="70" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+    <!--  -->
+    <line x1="35" y1="90" x2="25" y2="110" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+    <line x1="45" y1="90" x2="55" y2="110" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+  </svg>
 
   <!--  -->
   <div class="hole" id="hole"></div>
 
-  <!--  (  ) -->
-  <div class="boy" id="boy">
-    <div class="head"></div>
-    <div class="body"></div>
-    <div class="arm left"></div>
-    <div class="arm right"></div>
-  </div>
+  <!--  SVG -->
+  <svg id="boy" class="boy" width="80" height="120" viewBox="0 0 80 120">
+    <!--  -->
+    <rect x="30" y="40" width="20" height="50" fill="#87CEFA" rx="5"/>
+    <!--  -->
+    <circle cx="40" cy="25" r="15" fill="#FFE0BD"/>
+    <!--  -->
+    <circle cx="35" cy="22" r="2" fill="#000"/>
+    <circle cx="45" cy="22" r="2" fill="#000"/>
+    <!--   -->
+    <path d="M30,20 Q40,10 50,20" fill="#555"/>
+    <!--  -->
+    <line x1="30" y1="50" x2="10" y2="70" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="70" y2="70" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+  </svg>
 
-  <!--  -->
+  <!-- bubble message -->
   <div class="speech" id="speech">
     Happy Eid <br>
     Kol sana w enti tayeba 
@@ -42,6 +60,6 @@
 
 <button onclick="start()">Start</button>
 
-<script src="script_new.js"></script>
+<script src="script_svg.js"></script>
 </body>
 </html>
