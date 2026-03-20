@@ -1,86 +1,117 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f0f0f;
-  color: white;
+  background: #87ceeb;
   text-align: center;
-  padding: 20px;
+  font-family: Arial;
 }
 
-h1 {
-  margin-bottom: 30px;
+.scene {
+  position: relative;
+  height: 400px;
+  margin-top: 50px;
 }
 
-.game-board {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.card {
-  width: 250px;
-  border-radius: 20px;
-  overflow: hidden;
-  cursor: pointer;
-  background: #1a1a1a;
-  transition: transform 0.3s ease;
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-.card img {
+/* الأرض */
+.ground {
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  height: 250px;
-  object-fit: cover;
-  display: block;
-  transition: filter 0.7s ease, transform 0.5s ease;
+  height: 150px;
+  background: #8b4513;
 }
 
-/* الصورة مغلقة */
-.card.locked img {
-  filter: blur(10px) brightness(0.4);
-  transform: scale(1.05);
+/* البنت */
+.girl {
+  position: absolute;
+  bottom: 150px;
+  left: 45%;
 }
 
-/* الصورة مفتوحة */
-.card.open img {
-  filter: blur(0px) brightness(1);
-  transform: scale(1);
+.girl .head {
+  width: 30px;
+  height: 30px;
+  background: #ffd1a9;
+  border-radius: 50%;
+  margin: auto;
 }
 
-/* النصوص */
-.texts {
+.girl .body {
+  width: 20px;
+  height: 50px;
+  background: pink;
+  margin: auto;
+}
+
+.girl .tool {
+  width: 40px;
+  height: 5px;
+  background: gray;
+  transform-origin: left;
+}
+
+/* حركة الحفر */
+.girl.dig .tool {
+  animation: dig 0.4s infinite alternate;
+}
+
+@keyframes dig {
+  from { transform: rotate(-20deg); }
+  to { transform: rotate(20deg); }
+}
+
+/* الحفرة */
+.hole {
+  position: absolute;
+  bottom: 140px;
+  left: 48%;
+  width: 40px;
+  height: 20px;
+  background: black;
+  border-radius: 50%;
   opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  padding: 0 10px;
-  background: rgba(0,0,0,0.8);
-  transition: opacity 0.7s ease, max-height 0.7s ease, padding 0.7s ease;
+  transition: 0.5s;
 }
 
-.texts.show {
+.hole.show {
   opacity: 1;
-  max-height: 500px;
-  padding: 10px;
 }
 
-.texts p {
-  margin: 5px 0;
+/* الولد */
+.boy {
+  position: absolute;
+  bottom: 0;
+  left: 48%;
+  transform: translateY(100%);
+  transition: 0.8s ease;
+}
+
+.boy .head {
+  width: 30px;
+  height: 30px;
+  background: #ffd1a9;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.boy .body {
+  width: 20px;
+  height: 50px;
+  background: lightblue;
+  margin: auto;
+}
+
+.boy.show {
+  transform: translateY(-120px);
+}
+
+/* الرسالة */
+.message {
+  margin-top: 20px;
+  font-size: 24px;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: 1s;
 }
 
-.end-message {
-  margin-top: 40px;
-  display: none;
-}
-
-.final-msg {
-  margin-top: 10px;
-  font-size: 18px;
-  color: #ff9db5;
+.message.show {
+  opacity: 1;
 }

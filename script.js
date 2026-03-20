@@ -1,36 +1,26 @@
-const cards = document.querySelectorAll(".card");
-const endMessage = document.querySelector(".end-message");
+function startDig() {
 
-let opened = 0;
+  const girl = document.querySelector(".girl");
+  const hole = document.querySelector(".hole");
+  const boy = document.querySelector(".boy");
+  const message = document.querySelector(".message");
 
-cards.forEach(card => {
-  card.addEventListener("click", () => {
+  // تبدأ تحفر
+  girl.classList.add("dig");
 
-    if (!card.classList.contains("open")) {
+  // تظهر الحفرة
+  setTimeout(() => {
+    hole.classList.add("show");
+  }, 1500);
 
-      card.classList.remove("locked");
-      card.classList.add("open");
+  // يطلع الولد
+  setTimeout(() => {
+    girl.classList.remove("dig");
+    boy.classList.add("show");
+  }, 3000);
 
-      const texts = card.querySelector(".texts");
-      texts.classList.add("show");
-
-      // Fade in each paragraph line by line
-      const lines = texts.querySelectorAll("p");
-      lines.forEach((line, index) => {
-        setTimeout(() => {
-          line.style.opacity = 1;
-          line.style.transform = "translateY(0)";
-        }, index * 400);
-      });
-
-      opened++;
-
-      if (opened === cards.length) {
-        setTimeout(() => {
-          endMessage.style.display = "block";
-        }, 1000);
-      }
-    }
-
-  });
-});
+  // تظهر الرسالة
+  setTimeout(() => {
+    message.classList.add("show");
+  }, 4000);
+}
