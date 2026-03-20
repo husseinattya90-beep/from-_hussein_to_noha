@@ -3,99 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body {
-  margin: 0;
-  background: linear-gradient(#fde68a, #fbbf24);
-  overflow: hidden;
-}
-
-/* البنت */
-.girl {
-  position: absolute;
-  left: 20%;
-  bottom: 200px;
-  animation: look 2s infinite alternate ease-in-out;
-}
-
-@keyframes look {
-  from { transform: rotate(-5deg); }
-  to { transform: rotate(5deg); }
-}
-
-/* المنظار */
-.telescope {
-  transform-origin: left;
-  animation: zoom 2s infinite alternate;
-}
-
-@keyframes zoom {
-  from { transform: scaleX(1); }
-  to { transform: scaleX(1.1); }
-}
-
-/* الشخص */
-.guy {
-  position: absolute;
-  right: 15%;
-  bottom: 200px;
-  opacity: 0;
-  transform: translateY(50px);
-  transition: 1s;
-}
-
-/* اليافطة */
-.sign {
-  fill: white;
-  stroke: black;
-  stroke-width: 2;
-}
-
-.text {
-  font-size: 18px;
-  font-weight: bold;
-  text-anchor: middle;
-}
-</style>
+<title>Eid Surprise 🎉</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- بنت كرتون -->
-<svg class="girl" width="150" height="150" viewBox="0 0 100 100">
-  <!-- جسم -->
-  <circle cx="50" cy="40" r="20" fill="#ffb6c1"/>
-  
-  <!-- المنظار -->
-  <rect class="telescope" x="60" y="35" width="30" height="6" fill="black"/>
-</svg>
+<div class="scene">
 
-<!-- الشخص + اليافطة -->
-<svg class="guy" id="guy" width="200" height="200" viewBox="0 0 120 120">
-  
-  <!-- الجسم -->
-  <circle cx="60" cy="50" r="20" fill="#60a5fa"/>
+  <!-- البنت -->
+  <svg class="girl" viewBox="0 0 200 200">
+    
+    <!-- شعر -->
+    <path d="M50 80 Q100 20 150 80" fill="#3b2f2f"/>
+    
+    <!-- وش -->
+    <circle cx="100" cy="90" r="35" fill="#ffd1a4"/>
+    
+    <!-- عين -->
+    <circle cx="90" cy="85" r="4"/>
+    <circle cx="110" cy="85" r="4"/>
 
-  <!-- اليافطة -->
-  <rect class="sign" x="10" y="70" width="100" height="35" rx="10"/>
-  
-  <text x="60" y="90" class="text">
-    kol sana w enty tayeba
-  </text>
-  
-  <text x="60" y="105" class="text">
-    Happy Eid 🎉
-  </text>
+    <!-- جسم -->
+    <rect x="75" y="120" width="50" height="50" rx="10" fill="#ff8fab"/>
 
-</svg>
+    <!-- المنظار -->
+    <rect class="telescope" x="130" y="85" width="50" height="8" rx="4"/>
+  </svg>
 
-<script>
-setTimeout(()=>{
-  document.getElementById("guy").style.opacity = "1";
-  document.getElementById("guy").style.transform = "translateY(0)";
-},2000);
-</script>
+  <!-- الشخص التاني -->
+  <div class="guy" id="guy">
+    <svg viewBox="0 0 200 200">
 
+      <!-- وش -->
+      <circle cx="100" cy="80" r="30" fill="#90cdf4"/>
+
+      <!-- جسم -->
+      <rect x="70" y="110" width="60" height="60" rx="10" fill="#60a5fa"/>
+
+      <!-- يافطة -->
+      <rect x="20" y="140" width="160" height="40" rx="10" class="board"/>
+
+      <text x="100" y="165" text-anchor="middle" class="txt">
+        kol sana w enty tayeba
+      </text>
+
+      <text x="100" y="182" text-anchor="middle" class="txt">
+        Happy Eid 🎉
+      </text>
+
+    </svg>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
