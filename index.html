@@ -1,65 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Eid Cartoon Scene</title>
-<link rel="stylesheet" href="style_svg.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>  </title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(#fde68a, #fbbf24);
+  font-family: Arial;
+}
+
+/*  */
+.ground {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 180px;
+  background: #78350f;
+}
+
+/*  */
+.girl {
+  position: absolute;
+  bottom: 180px;
+  left: 45%;
+  width: 70px;
+  height: 70px;
+  background: #ff9ecb;
+  border-radius: 50%;
+  animation: dig 0.5s infinite alternate ease-in-out;
+}
+
+/*   */
+@keyframes dig {
+  from { transform: translateY(0); }
+  to { transform: translateY(15px); }
+}
+
+/*  */
+.hole {
+  position: absolute;
+  bottom: 180px;
+  left: 47%;
+  width: 50px;
+  height: 25px;
+  background: black;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+/*  */
+.surprise {
+  position: absolute;
+  bottom: 180px;
+  left: 47%;
+  width: 60px;
+  height: 60px;
+  background: #60a5fa;
+  border-radius: 50%;
+  transform: translateY(120px);
+}
+
+/* Bounce */
+.bounce {
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(120px); }
+  60% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+/*  */
+.text {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  text-align: center;
+  font-size: 35px;
+  color: #78350f;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: 0.6s;
+}
+
+/*  */
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: red;
+  top: -10px;
+  animation: fall 3s linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+</style>
 </head>
+
 <body>
 
-<div class="scene">
+<div class="girl"></div>
+<div class="hole"></div>
+<div class="surprise"></div>
+<div class="text">     </div>
+<div class="ground"></div>
 
-  <!--  -->
-  <div class="ground"></div>
+<script>
 
-  <!--  SVG -->
-  <svg id="girl" class="girl" width="80" height="120" viewBox="0 0 80 120">
-    <!--  -->
-    <rect x="30" y="40" width="20" height="50" fill="#FFB6C1" rx="5"/>
-    <!--  -->
-    <circle cx="40" cy="25" r="15" fill="#FFD1DC"/>
-    <!--  -->
-    <circle cx="35" cy="22" r="2" fill="#000"/>
-    <circle cx="45" cy="22" r="2" fill="#000"/>
-    <!--  -->
-    <path d="M25,25 Q40,10 55,25" fill="#FF69B4"/>
-    <!--  -->
-    <line x1="30" y1="50" x2="10" y2="70" stroke="#333" stroke-width="4" stroke-linecap="round"/>
-    <line x1="50" y1="50" x2="70" y2="70" stroke="#333" stroke-width="4" stroke-linecap="round"/>
-    <!--  -->
-    <line x1="35" y1="90" x2="25" y2="110" stroke="#333" stroke-width="4" stroke-linecap="round"/>
-    <line x1="45" y1="90" x2="55" y2="110" stroke="#333" stroke-width="4" stroke-linecap="round"/>
-  </svg>
+//  
+setTimeout(() => {
+  document.querySelector(".hole").style.opacity = "1";
+}, 1200);
 
-  <!--  -->
-  <div class="hole" id="hole"></div>
+//   + bounce
+setTimeout(() => {
+  let s = document.querySelector(".surprise");
+  s.classList.add("bounce");
+}, 1800);
 
-  <!--  SVG -->
-  <svg id="boy" class="boy" width="80" height="120" viewBox="0 0 80 120">
-    <!--  -->
-    <rect x="30" y="40" width="20" height="50" fill="#87CEFA" rx="5"/>
-    <!--  -->
-    <circle cx="40" cy="25" r="15" fill="#FFE0BD"/>
-    <!--  -->
-    <circle cx="35" cy="22" r="2" fill="#000"/>
-    <circle cx="45" cy="22" r="2" fill="#000"/>
-    <!--   -->
-    <path d="M30,20 Q40,10 50,20" fill="#555"/>
-    <!--  -->
-    <line x1="30" y1="50" x2="10" y2="70" stroke="#333" stroke-width="4" stroke-linecap="round"/>
-    <line x1="50" y1="50" x2="70" y2="70" stroke="#333" stroke-width="4" stroke-linecap="round"/>
-  </svg>
+//   + confetti
+setTimeout(() => {
+  let text = document.querySelector(".text");
+  text.style.opacity = "1";
+  text.style.transform = "scale(1)";
 
-  <!-- bubble message -->
-  <div class="speech" id="speech">
-    Happy Eid <br>
-    Kol sana w enti tayeba 
-  </div>
+  //  
+  for (let i = 0; i < 50; i++) {
+    let c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(c);
+  }
 
-</div>
+}, 2500);
 
-<button onclick="start()">Start</button>
+</script>
 
-<script src="script_svg.js"></script>
 </body>
 </html>
